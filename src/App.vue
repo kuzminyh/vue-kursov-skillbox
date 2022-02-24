@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
    <ul class="catalog__list">
           <li class="catalog__item">
@@ -94,7 +95,6 @@
             <span class="catalog__price">
               790 ₽
             </span>
-
 
             <ul class="colors colors--black">
               <li class="colors__item">

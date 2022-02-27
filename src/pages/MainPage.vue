@@ -89,7 +89,7 @@ export default {
             const itms = response.data.items;
             itms.map((p) => {
              return { ...p,
-              image: p.gallery[0].file.url
+              image: p.gallery.file.url
             }
             })
 

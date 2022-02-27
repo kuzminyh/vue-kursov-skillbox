@@ -1,463 +1,114 @@
 <template>
-<ul class="catalog__list">
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-1.jpg" srcset="img/product-1@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Кружевной бюстгалтер без косточек
+  <div>
+    <ProductList :products="products"/>
+    <ul class="catalog__list">
+      <li class="catalog__item">
+        <a class="catalog__pic" href="#">
+          <img
+            src="img/product-1.jpg"
+            srcset="img/product-1@2x.jpg 2x"
+            alt="Название товара"
+          />
         </a>
-    </h3>
 
-    <span class="catalog__price">
-        3 690 ₽
-    </span>
+        <h3 class="catalog__title">
+          <a href="#"> Кружевной бюстгалтер без косточек </a>
+        </h3>
 
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-1" value="#73B6EA" checked="">
-            <span class="colors__value" style="background-color: #73B6EA;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-1" value="#8BE000">
-            <span class="colors__value" style="background-color: #8BE000;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-1" value="#222">
-            <span class="colors__value" style="background-color: #222;">
-            </span>
-        </label>
-        </li>
+        <span class="catalog__price"> 3 690 ₽ </span>
+
+        <ul class="colors colors--black">
+          <li class="colors__item">
+            <label class="colors__label">
+              <input
+                class="colors__radio sr-only"
+                type="radio"
+                name="color-1"
+                value="#73B6EA"
+                checked=""
+              />
+              <span class="colors__value" style="background-color: #73b6ea">
+              </span>
+            </label>
+          </li>
+          <li class="colors__item">
+            <label class="colors__label">
+              <input
+                class="colors__radio sr-only"
+                type="radio"
+                name="color-1"
+                value="#8BE000"
+              />
+              <span class="colors__value" style="background-color: #8be000">
+              </span>
+            </label>
+          </li>
+          <li class="colors__item">
+            <label class="colors__label">
+              <input
+                class="colors__radio sr-only"
+                type="radio"
+                name="color-1"
+                value="#222"
+              />
+              <span class="colors__value" style="background-color: #222">
+              </span>
+            </label>
+          </li>
+        </ul>
+      </li>
     </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-2.jpg" srcset="img/product-2@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Трусы с кружевными элементами
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        5 660 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-2" value="#F0F0F0" checked="">
-            <span class="colors__value" style="background-color: #F0F0F0;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-2" value="#8BE000">
-            <span class="colors__value" style="background-color: #8BE000;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-2" value="#73B6EA">
-            <span class="colors__value" style="background-color: #73B6EA;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-3.jpg" srcset="img/product-2@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Теплые шерстяные носки
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        790 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-02" value="#F0F0F0" checked="">
-            <span class="colors__value" style="background-color: #F0F0F0;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-02" value="#8BE000">
-            <span class="colors__value" style="background-color: #8BE000;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-02" value="#73B6EA">
-            <span class="colors__value" style="background-color: #73B6EA;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-4.jpg" srcset="img/product-4@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Теплые шерстяные носки
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        690 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-3" value="#939393" checked="">
-            <span class="colors__value" style="background-color: #939393;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-3" value="#FF6B00">
-            <span class="colors__value" style="background-color: #FF6B00;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-3" value="#222">
-            <span class="colors__value" style="background-color: #222;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-5.jpg" srcset="img/product-5@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Носки с принтом мороженое
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        960 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-03" value="#939393" checked="">
-            <span class="colors__value" style="background-color: #939393;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-03" value="#FF6B00">
-            <span class="colors__value" style="background-color: #FF6B00;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-03" value="#222">
-            <span class="colors__value" style="background-color: #222;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-6.jpg" srcset="img/product-7@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Базовая футболка
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        960 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-04" value="#FFBE15" checked="">
-            <span class="colors__value" style="background-color: #FFBE15;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-04" value="#8BE000">
-            <span class="colors__value" style="background-color: #8BE000;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-04" value="#FF6B00">
-            <span class="colors__value" style="background-color: #FF6B00;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-7.jpg" srcset="img/product-7@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Базовая хлопковая футболка
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        900 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-4" value="#FFBE15" checked="">
-            <span class="colors__value" style="background-color: #FFBE15;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-4" value="#8BE000">
-            <span class="colors__value" style="background-color: #8BE000;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-4" value="#FF6B00">
-            <span class="colors__value" style="background-color: #FF6B00;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-8.jpg" srcset="img/product-8@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Базовая футболка для сна
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        600 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-5" value="#939393" checked="">
-            <span class="colors__value" style="background-color: #939393;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-5" value="#F0F0F0">
-            <span class="colors__value" style="background-color: #F0F0F0;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-9.jpg" srcset="img/product-9@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Кружевной бюстгалтер на бретелях
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        4 990 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-6" value="#222" checked="">
-            <span class="colors__value" style="background-color: #222;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-6" value="#73B6EA">
-            <span class="colors__value" style="background-color: #73B6EA;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-10.jpg" srcset="img/product-10@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Мужские домашние шорты для сна
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        1 090 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-7" value="#FFBE15" checked="">
-            <span class="colors__value" style="background-color: #FFBE15;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-7" value="#8BE000">
-            <span class="colors__value" style="background-color: #8BE000;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-7" value="#222">
-            <span class="colors__value" style="background-color: #222;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-11.jpg" srcset="img/product-11@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Базовая хлопковая майка
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        560 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-07" value="#FFBE15" checked="">
-            <span class="colors__value" style="background-color: #FFBE15;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-07" value="#222">
-            <span class="colors__value" style="background-color: #222;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-
-    <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-        <img src="img/product-12.jpg" srcset="img/product-12@2x.jpg 2x" alt="Название товара">
-    </a>
-
-    <h3 class="catalog__title">
-        <a href="#">
-        Детский комбинезон (1-4 мес)
-        </a>
-    </h3>
-
-    <span class="catalog__price">
-        990 ₽
-    </span>
-
-    <ul class="colors colors--black">
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-6" value="#222" checked="">
-            <span class="colors__value" style="background-color: #222;">
-            </span>
-        </label>
-        </li>
-        <li class="colors__item">
-        <label class="colors__label">
-            <input class="colors__radio sr-only" type="radio" name="color-6" value="#FF6B00">
-            <span class="colors__value" style="background-color: #FF6B00;">
-            </span>
-        </label>
-        </li>
-    </ul>
-    </li>
-</ul>
+  </div>
 </template>
-<script>
 
- import { ProductList } from '@/components/ProductList.vue'
+<script>
+import  ProductList from "@/components/ProductList.vue";
+import axios from "axios"
 
 export default {
-    components: {ProductList, }
-}
+   components: { ProductList, },
+  data() {
+    return {
+      productsData: null,
+    }
+
+  },
+  computed: {
+    products() {
+      return this.productsData
+    }
+  },
+   methods: {
+     loadProducts: async function() {
+        console.log(5)
+         try {
+        console.log(5)
+          const resp = await axios.get('https://vue-moire.skillbox.cc/api/products')
+          .then((response) => {
+            console.log('response.data.items.gallery.url=',response.data.items)
+            const itms = response.data.items;
+            itms.map((p) => {
+             return { ...p,
+              image: p.gallery[0].file.url
+            }
+            })
+
+            this.productsData = itms
+            console.log('itms=', itms)
+            // {
+            //   ...response.data.items,
+            //   url: response.data.items.gallery.url
+            //   }
+            })
+        }
+        catch(err){
+        }
+    }
+  },
+  created() {
+    this.loadProducts()
+  }
+};
+
 </script>
+

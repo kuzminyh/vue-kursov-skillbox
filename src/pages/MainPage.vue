@@ -1,15 +1,30 @@
 <template>
   <div>
-    <ProductList :products="products" />
+    <main class="content container">
+      <div class="content__top">
+        <div class="content__row">
+          <h1 class="content__title">Каталог</h1>
+          <span class="content__info"> 152 товара </span>
+        </div>
+      </div>
+        <div class="content__catalog">
+            <ProductFilter/>
+            <div  v-if="products.length > 2">
+                <ProductList :products="products" />
+            </div>
+            
+        </div>
+    </main>
   </div>
 </template>
 
 <script>
 import ProductList from "@/components/ProductList.vue";
+import ProductFilter from "@/components/ProductFilter.vue"
 import axios from "axios";
 
 export default {
-  components: { ProductList },
+  components: { ProductList , ProductFilter},
   data() {
     return {
       productsData: null,
@@ -17,9 +32,9 @@ export default {
   },
   computed: {
     products() {
-     const result =  this.productsData
+      const result = this.productsData
         ? this.productsData.items.map((p) => {
-            console.log('p.id=', p.id)
+            console.log("p.id=", p.id);
             if (p.colors[0].gallery != null) {
               return {
                 ...p,
@@ -27,10 +42,10 @@ export default {
               };
             }
           })
-        :  [ ]
-        console.log('result.length=', result.length)
-       return result 
-  },
+        : [];
+      console.log("result.length=", result.length);
+      return result;
+    },
   },
   methods: {
     //   loadProducts() {
@@ -46,7 +61,7 @@ export default {
           .get("https://vue-moire.skillbox.cc/api/products")
           .then((response) => {
             this.productsData = response.data;
-             console.log(3)
+            console.log(3);
           });
       } catch (err) {
         console.log("error 5=", err);
@@ -55,9 +70,9 @@ export default {
     },
   },
   created() {
-    console.log(1)  
+    console.log(1);
     this.loadProducts();
-    console.log(2)
+    console.log(2);
   },
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
   <li class="catalog__item">
-    <a class="catalog__pic" href="#">
+    <router-link class="catalog__pic" :to="{name: 'product', poarams: {id: product.id}}" >
       <img :src="product.image" alt="Название товара">
-    </a>
+    </router-link>
 
     <h3 class="catalog__title">
       <a href="#">
@@ -13,6 +13,9 @@
     <span class="catalog__price">
       3 690 ₽
     </span>
+
+
+
 
     <ul class="colors colors--black">
       <li class="colors__item">

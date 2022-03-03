@@ -1,7 +1,7 @@
 <template>
   <section class="catalog">
-    <ul class="catalog__list" v-if="products.length > 2">
-      <ProductItem :product="product"  v-for="product in products"  />
+    <ul class="catalog__list">
+      <ProductItem :product="product"  v-for="product in products" :key="product.id" />
     </ul>
   </section>
 </template>

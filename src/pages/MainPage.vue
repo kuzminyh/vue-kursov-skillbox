@@ -7,24 +7,21 @@
           <span class="content__info"> 152 товара </span>
         </div>
       </div>
-        <div class="content__catalog">
-            <ProductFilter/>
-            <div  v-if="products.length > 2">
-                <ProductList :products="products" />
-            </div>
-            
-        </div>
+      <div class="content__catalog">
+        <ProductFilter />
+        <ProductList :products="products" />
+      </div>
     </main>
   </div>
 </template>
 
 <script>
 import ProductList from "@/components/ProductList.vue";
-import ProductFilter from "@/components/ProductFilter.vue"
+import ProductFilter from "@/components/ProductFilter.vue";
 import axios from "axios";
 
 export default {
-  components: { ProductList , ProductFilter},
+  components: { ProductList, ProductFilter },
   data() {
     return {
       productsData: null,
@@ -43,8 +40,8 @@ export default {
             }
           })
         : [];
-      console.log("result.length=", result.length);
-      return result;
+      console.log("result=", result);
+      return result.filter((el) => el != undefined);
     },
   },
   methods: {

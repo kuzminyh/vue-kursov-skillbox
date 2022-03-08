@@ -2,3 +2,4 @@ src/*.vue
 src/components/*.vue
 src/pages/*.vue
 src/router/*.js
+src/*.js

@@ -1,14 +1,14 @@
 <template>
     <aside class="filter">
-        <form class="filter__form form" action="#" method="get">
+        <form class="filter__form form" action="#" method="get" @submit.prevent="submit">
           <fieldset class="form__block">
             <legend class="form__legend">Цена</legend>
             <label class="form__label form__label--price">
-              <input class="form__input" type="text" name="min-price" value="0">
+              <input class="form__input" type="text" v-model.number="currentPriceFrom">
               <span class="form__value">От</span>
             </label>
             <label class="form__label form__label--price">
-              <input class="form__input" type="text" name="max-price" value="12345">
+              <input class="form__input" type="text" v-model.number="currentPriceTo">
               <span class="form__value">До</span>
             </label>
           </fieldset>
@@ -27,12 +27,12 @@
 
           <fieldset class="form__block">
             <legend class="form__legend">Материал</legend>
-            <ul class="check-list">          
+            <ul class="check-list">
               <li class="check-list__item">
                 <label class="check-list__label">
                   <input class="check-list__check sr-only" type="checkbox" name="material" value="лен">
                   <span class="check-list__desc">
-                    лен 
+                    лен
                     <span>(3)</span>
                   </span>
                 </label>
@@ -41,7 +41,7 @@
                 <label class="check-list__label">
                   <input class="check-list__check sr-only" type="checkbox" name="material" value="хлопок">
                   <span class="check-list__desc">
-                    хлопок 
+                    хлопок
                     <span>(46)</span>
                   </span>
                 </label>
@@ -50,7 +50,7 @@
                 <label class="check-list__label">
                   <input class="check-list__check sr-only" type="checkbox" name="material" value="шерсть">
                   <span class="check-list__desc">
-                    шерсть 
+                    шерсть
                     <span>(20)</span>
                   </span>
                 </label>
@@ -59,7 +59,7 @@
                 <label class="check-list__label">
                   <input class="check-list__check sr-only" type="checkbox" name="material" value="шелк">
                   <span class="check-list__desc">
-                    шелк 
+                    шелк
                     <span>(30)</span>
                   </span>
                 </label>
@@ -74,7 +74,7 @@
                 <label class="check-list__label">
                   <input class="check-list__check sr-only" type="checkbox" name="collection" value="лето" checked="">
                   <span class="check-list__desc">
-                    лето 
+                    лето
                     <span>(2)</span>
                   </span>
                 </label>
@@ -83,7 +83,7 @@
                 <label class="check-list__label">
                   <input class="check-list__check sr-only" type="checkbox" name="collection" value="зима">
                   <span class="check-list__desc">
-                    зима 
+                    зима
                     <span>(53)</span>
                   </span>
                 </label>
@@ -92,7 +92,7 @@
                 <label class="check-list__label">
                   <input class="check-list__check sr-only" type="checkbox" name="collection" value="весна">
                   <span class="check-list__desc">
-                    весна 
+                    весна
                     <span>(24)</span>
                   </span>
                 </label>
@@ -101,7 +101,7 @@
                 <label class="check-list__label">
                   <input class="check-list__check sr-only" type="checkbox" name="collection" value="осень">
                   <span class="check-list__desc">
-                    осень 
+                    осень
                     <span>(30)</span>
                   </span>
                 </label>
@@ -109,7 +109,7 @@
             </ul>
           </fieldset>
 
-          <button class="filter__submit button button--primery" type="submit">
+          <button class="filter__submit button button--primery" type="submit" >
             Применить
           </button>
           <button class="filter__reset button button--second" type="button">
@@ -118,3 +118,31 @@
         </form>
       </aside>
 </template>
+<script>
+import numberFormat from '@/helpers/numberFormat';
+export default {
+  data() {
+    return {
+      currentPriceFrom: 0,
+      currentPriceTo: 0,
+    }
+  },
+  props: ['priceFrom' , 'priceTo'],
+  methods: {
+    submit() {
+      this.$emit('update:priceFrom', this.currentPriceFrom)
+      this.$emit('update:priceTo', this.currentPriceTo)
+    }
+  },
+  watch: {
+    priceFrom(value) {
+      this.currentPriceFrom = value
+    },
+    priceTo(value) {
+      this.currentPriceTo = value
+    },
+
+  }
+
+}
+</script>

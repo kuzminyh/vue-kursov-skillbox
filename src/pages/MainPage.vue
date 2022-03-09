@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="content__catalog">
-        <ProductFilter />
+        <ProductFilter :price-from.sync="filterPriceFrom" :price-to.sync="filterPriceTo"/>
         <ProductList :products="products" />
       </div>
     </main>
@@ -19,12 +19,15 @@
 import ProductList from "@/components/ProductList.vue";
 import ProductFilter from "@/components/ProductFilter.vue";
 import axios from "axios";
+import { API_BASE_URL } from '../config';
 
 export default {
   components: { ProductList, ProductFilter },
   data() {
     return {
       productsData: null,
+      filterPriceFrom: 0,
+      filterPriceTo: 0,
     };
   },
   computed: {
@@ -55,9 +58,15 @@ export default {
     loadProducts: async function () {
       try {
         const resp = await axios
-          .get("https://vue-moire.skillbox.cc/api/products")
+          .get(API_BASE_URL + '/api/products', {
+            params: {
+              minPrice: this.filterPriceFrom,
+              maxPrice: this.filterPriceTo,
+            }
+          })
           .then((response) => {
             this.productsData = response.data;
+
             console.log(3);
           });
       } catch (err) {
@@ -71,6 +80,16 @@ export default {
     this.loadProducts();
     console.log(2);
   },
+  watch: {
+    filterPriceFrom() {
+      alert(5)
+      console.log('this.filterPriceFrom=', this.filterPriceFrom)
+      this.loadProducts()
+    },
+    filterPriceTo() {
+      this.loadProducts()
+    },
+  }
 };
 </script>
 

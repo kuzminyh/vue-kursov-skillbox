@@ -29,7 +29,7 @@
 
         <div class="item__info">
           <span class="item__code">Артикул: 150030</span>
-          <h2 class="item__title">{{ product.title }}</h2>
+          <h2  class="item__title">{{ product.title }}</h2>
           <div class="item__form">
             <form class="form" action="#" method="POST">
               <div class="item__row item__row--center">
@@ -85,7 +85,7 @@
                       <option
                         value="value1"
                         v-for="size in product.sizes"
-                        :key="product.sizes.id"
+                        :key="size.id"
                       >
                         {{ size.title }}
                       </option>
@@ -148,7 +148,8 @@ export default {
   computed: {
     product() {
       console.log("product=", this.productData);
-      return this.productData;
+      return  this.productData ? this.productData : {} ;
+      // return this.productData;
     },
   },
   methods: {

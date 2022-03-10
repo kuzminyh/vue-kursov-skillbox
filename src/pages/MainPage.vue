@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="content__catalog">
-        <ProductFilter :price-from.sync="filterPriceFrom" :price-to.sync="filterPriceTo"/>
+        <ProductFilter :price-from.sync="filterPriceFrom" :price-to.sync="filterPriceTo" />
         <ProductList :products="products" />
       </div>
     </main>
@@ -35,7 +35,7 @@ export default {
       const result = this.productsData
         ? this.productsData.items.map((p) => {
             console.log("p.id=", p.id);
-            if (p.colors[0].gallery != null) {
+            if (p.colors[0].gallery !== null) {
               return {
                 ...p,
                 image: p.colors[0].gallery[0].file.url,
@@ -44,7 +44,7 @@ export default {
           })
         : [];
       console.log("result=", result);
-      return result.filter((el) => el != undefined);
+      return result.filter((el) => el !== undefined);
     },
   },
   methods: {

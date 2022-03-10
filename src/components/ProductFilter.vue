@@ -16,11 +16,9 @@
           <fieldset class="form__block">
             <legend class="form__legend">Категория</legend>
             <label class="form__label form__label--select">
-              <select class="form__select" type="text" name="category">
-                <option value="value1">Все категории</option>
-                <option value="value2">Футболки</option>
-                <option value="value3">Бюстгалтеры</option>
-                <option value="value4">Носки</option>
+              <select class="form__select" type="text" name="category" v-model="selectedCategory">
+                <option value="0" >Все категории</option>
+                <option :value="category.id" v-for="category in categories" :key="category.id" >{{category.title}}</option>
               </select>
             </label>
           </fieldset>
@@ -28,39 +26,12 @@
           <fieldset class="form__block">
             <legend class="form__legend">Материал</legend>
             <ul class="check-list">
-              <li class="check-list__item">
+              <li class="check-list__item" v-for="material in materials" :key="material.id">
                 <label class="check-list__label">
-                  <input class="check-list__check sr-only" type="checkbox" name="material" value="лен">
+                  <input class="check-list__check sr-only" type="checkbox" name="material" :value="material.id" v-model="checkedMaterials">
                   <span class="check-list__desc">
-                    лен
+                    {{ material.title }}
                     <span>(3)</span>
-                  </span>
-                </label>
-              </li>
-              <li class="check-list__item">
-                <label class="check-list__label">
-                  <input class="check-list__check sr-only" type="checkbox" name="material" value="хлопок">
-                  <span class="check-list__desc">
-                    хлопок
-                    <span>(46)</span>
-                  </span>
-                </label>
-              </li>
-              <li class="check-list__item">
-                <label class="check-list__label">
-                  <input class="check-list__check sr-only" type="checkbox" name="material" value="шерсть">
-                  <span class="check-list__desc">
-                    шерсть
-                    <span>(20)</span>
-                  </span>
-                </label>
-              </li>
-              <li class="check-list__item">
-                <label class="check-list__label">
-                  <input class="check-list__check sr-only" type="checkbox" name="material" value="шелк">
-                  <span class="check-list__desc">
-                    шелк
-                    <span>(30)</span>
                   </span>
                 </label>
               </li>
@@ -72,7 +43,7 @@
             <ul class="check-list">
               <li class="check-list__item">
                 <label class="check-list__label">
-                  <input class="check-list__check sr-only" type="checkbox" name="collection" value="лето" checked="">
+                  <input class="check-list__check sr-only" type="checkbox" name="collection" value="лето" checked="" v-model="checkedSeson">
                   <span class="check-list__desc">
                     лето
                     <span>(2)</span>
@@ -120,19 +91,54 @@
 </template>
 <script>
 import numberFormat from '@/helpers/numberFormat';
+import axios from 'axios';
+import { API_BASE_URL } from '../config';
 export default {
   data() {
     return {
       currentPriceFrom: 0,
       currentPriceTo: 0,
+      selectedCategory: 0,
+      categoriesData: null,
+      materialsData: null,
+      checkedMaterials: [],
+      checkedSeson: [],
     }
   },
   props: ['priceFrom' , 'priceTo'],
+  computed: {
+     categories() {
+       return this.categoriesData ? this.categoriesData.items : []
+     },
+     materials() {
+       return this.materialsData ? this.materialsData.items : []
+     }
+  },
   methods: {
     submit() {
       this.$emit('update:priceFrom', this.currentPriceFrom)
       this.$emit('update:priceTo', this.currentPriceTo)
+      this.$emit('update:checkedMaterials', this.checkedMaterials)
+      this.$emit('update:checkedSeson', this.checkedSeson)
+      this.$emit('update:selectedCategory', this.selectedCategory)
+    },
+    loadCategories: async function() {
+      try {
+        const res = await axios.get(API_BASE_URL + '/api/productCategories')
+        .then(response => this.categoriesData = response.data)
+      } catch (error) {
+
+      }
+    },
+    loadMaterials: async function() {
+      try {
+         const res = await axios.get(API_BASE_URL + '/api/materials')
+        .then(response => this.materialsData = response.data)
+      } catch (error) {
+
+      }
     }
+
   },
   watch: {
     priceFrom(value) {
@@ -141,7 +147,10 @@ export default {
     priceTo(value) {
       this.currentPriceTo = value
     },
-
+  },
+  created(){
+    this.loadCategories()
+    this.loadMaterials()
   }
 
 }

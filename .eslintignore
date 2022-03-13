@@ -3,3 +3,4 @@ src/components/*.vue
 src/pages/*.vue
 src/router/*.js
 src/*.js
+src/helpers/*.js

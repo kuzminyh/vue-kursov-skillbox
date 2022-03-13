@@ -12,7 +12,7 @@
       <a href="#"> {{ product.title }} {{ product.id }} </a>
     </h3>
 
-    <span class="catalog__price"> 3 690 ₽ </span>
+    <span class="catalog__price"> {{ product.price }} ₽ </span>
 
     <ul class="colors colors--black">
       <li class="colors__item">

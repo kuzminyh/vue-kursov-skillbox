@@ -8,8 +8,17 @@
         </div>
       </div>
       <div class="content__catalog">
-        <ProductFilter :priceFrom.sync="filterPriceFrom" :priceTo.sync="filterPriceTo" :checkedMaterials.sync="filterMaterials" />
-        <ProductList :products="products" />
+        <ProductFilter
+          :priceFrom.sync="filterPriceFrom"
+          :priceTo.sync="filterPriceTo"
+          :checkedMaterials.sync="filterMaterials"
+          :selectedCategory.sync="filterCategory"
+          :checkedSeson.sync="filterSeson"
+        />
+        <section class="catalog">
+          <ProductList :products="products" />
+          <BasePagination />
+        </section>
       </div>
     </main>
   </div>
@@ -18,16 +27,20 @@
 <script>
 import ProductList from "@/components/ProductList.vue";
 import ProductFilter from "@/components/ProductFilter.vue";
+import BasePagination from "@/components/BasePagination.vue";
 import axios from "axios";
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL } from "../config";
+
 export default {
-  components: { ProductList, ProductFilter },
+  components: { ProductList, ProductFilter, BasePagination },
   data() {
     return {
       productsData: null,
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterMaterials: [],
+      filterCategory: null,
+      filterSeson: [],
     };
   },
   computed: {
@@ -51,12 +64,14 @@ export default {
     loadProducts: async function () {
       try {
         const resp = await axios
-          .get(API_BASE_URL + '/api/products', {
+          .get(API_BASE_URL + "/api/products", {
             params: {
               minPrice: this.filterPriceFrom,
               maxPrice: this.filterPriceTo,
-              materialIds: this.filterMaterials
-            }
+              materialIds: this.filterMaterials,
+              categoryId: this.filterCategory,
+              seasonIds: this.filterSeson,
+            },
           })
           .then((response) => {
             this.productsData = response.data;
@@ -75,17 +90,23 @@ export default {
   },
   watch: {
     filterPriceFrom() {
-      alert(5)
-      console.log('this.filterPriceFrom=', this.filterPriceFrom)
-      this.loadProducts()
+      alert(5);
+      console.log("this.filterPriceFrom=", this.filterPriceFrom);
+      this.loadProducts();
     },
     filterPriceTo() {
-      this.loadProducts()
+      this.loadProducts();
     },
     filterMaterials() {
-      this.loadProducts()
-    }
-
-  }
+      this.loadProducts();
+    },
+    filterCategory() {
+      this.loadProducts();
+    },
+    filterSeson() {
+      console.log("this.filterSeson=", this.filterSeson);
+      this.loadProducts();
+    },
+  },
 };
 </script>

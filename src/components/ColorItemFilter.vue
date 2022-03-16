@@ -4,10 +4,9 @@
       <label class="colors__label">
         <input
           class="colors__radio sr-only"
-          type="radio"
-          name="color-1"
+          type="checkbox"
           :value="item.code"
-          v-model="checkedColor"
+          v-model="checkedColor1"
         />
         <span class="colors__value" :style="{ background: item.code }"> </span>
       </label>
@@ -16,14 +15,31 @@
 </template>
 <script>
 export default {
-  props: ["colors", "currentColor"],
-  computed: {
-    checkedColor: {
-      get() {},
-      set(value) {
-        this.$emit("update:currentColor", value);
-      },
+  data() {
+    return {
+      checkedColor1: [],
+    };
+  },
+  props: ["colors"],
+  watch: {
+    checkedColor1() {
+      this.$emit("update:checkedColor1", this.checkedColor1);
     },
+  },
+
+  computed: {
+    // checkedColor() {
+    //   this.$emit("change:currentColor")
+    // }
+    // checkedColor: {
+    //   get() {
+    //     return this.currentColor;
+    //   },
+    //   set(checked) {
+    //     console.log("checked=", checked);
+    //     this.$emit("change:currentColor", checked);
+    //   },
+    // },
   },
 };
 </script>

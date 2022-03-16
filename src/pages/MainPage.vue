@@ -14,6 +14,7 @@
           :checkedMaterials.sync="filterMaterials"
           :selectedCategory.sync="filterCategory"
           :checkedSeson.sync="filterSeson"
+          :checkedColor.sync="filterColor"
         />
         <section class="catalog">
           <ProductList :products="products" />
@@ -41,6 +42,7 @@ export default {
       filterMaterials: [],
       filterCategory: null,
       filterSeson: [],
+      filterColor: [],
     };
   },
   computed: {
@@ -71,6 +73,7 @@ export default {
               materialIds: this.filterMaterials,
               categoryId: this.filterCategory,
               seasonIds: this.filterSeson,
+              colorIds: this.filterColor,
             },
           })
           .then((response) => {
@@ -90,7 +93,6 @@ export default {
   },
   watch: {
     filterPriceFrom() {
-      alert(5);
       console.log("this.filterPriceFrom=", this.filterPriceFrom);
       this.loadProducts();
     },
@@ -105,6 +107,10 @@ export default {
     },
     filterSeson() {
       console.log("this.filterSeson=", this.filterSeson);
+      this.loadProducts();
+    },
+    filterColor() {
+      alert(5);
       this.loadProducts();
     },
   },

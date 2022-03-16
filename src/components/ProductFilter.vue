@@ -115,7 +115,7 @@
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
         <ul class="colors">
-          <ColorItemFilter :colors="colors" :currentColor="currentColor" />
+          <ColorItemFilter :colors="colors" :checkedColor1.sync="checkedColor" />
         </ul>
       </fieldset>
 
@@ -140,7 +140,7 @@ export default {
       checkedMaterials: [],
       checkedSeson: [],
       colorsData: null,
-      currentColor: null,
+      checkedColor: [],
     };
   },
   props: ["priceFrom", "priceTo"],
@@ -163,6 +163,7 @@ export default {
       this.$emit("update:checkedMaterials", this.checkedMaterials);
       this.$emit("update:checkedSeson", this.checkedSeson);
       this.$emit("update:selectedCategory", this.selectedCategory);
+      this.$emit("update:checkedColor", this.checkedColor);
     },
     loadCategories: async function () {
       try {

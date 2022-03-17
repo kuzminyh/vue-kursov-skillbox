@@ -16,7 +16,12 @@
       <fieldset class="form__block">
         <legend class="form__legend">Категория</legend>
         <label class="form__label form__label--select">
-          <select class="form__select" type="text" name="category" v-model="selectedCategory">
+          <select
+            class="form__select"
+            type="text"
+            name="category"
+            v-model="currentSelectedCategory"
+          >
             <option value="0">Все категории</option>
             <option :value="category.id" v-for="category in categories" :key="category.id">
               {{ category.title }}
@@ -35,7 +40,7 @@
                 type="checkbox"
                 name="material"
                 :value="material.id"
-                v-model="checkedMaterials"
+                v-model="currentCheckedMaterials"
               />
               <span class="check-list__desc">
                 {{ material.title }}
@@ -56,7 +61,7 @@
                 type="checkbox"
                 name="collection"
                 value="1"
-                v-model.number="checkedSeson"
+                v-model.number="currentСheckedSeson"
               />
               <span class="check-list__desc">
                 лето
@@ -71,7 +76,7 @@
                 type="checkbox"
                 name="collection"
                 value="3"
-                v-model.number="checkedSeson"
+                v-model.number="currentСheckedSeson"
               />
               <span class="check-list__desc">
                 зима
@@ -86,7 +91,7 @@
                 type="checkbox"
                 name="collection"
                 value="4"
-                v-model.number="checkedSeson"
+                v-model.number="currentСheckedSeson"
               />
               <span class="check-list__desc">
                 весна
@@ -101,7 +106,7 @@
                 type="checkbox"
                 name="collection"
                 value="2"
-                v-model.number="checkedSeson"
+                v-model.number="currentСheckedSeson"
               />
               <span class="check-list__desc">
                 осень
@@ -120,7 +125,9 @@
       </fieldset>
 
       <button class="filter__submit button button--primery" type="submit">Применить</button>
-      <button class="filter__reset button button--second" type="button">Сбросить</button>
+      <button class="filter__reset button button--second" type="button" @click.prevent="reset">
+        Сбросить
+      </button>
     </form>
   </aside>
 </template>
@@ -134,16 +141,16 @@ export default {
     return {
       currentPriceFrom: 0,
       currentPriceTo: 0,
-      selectedCategory: 0,
+      currentSelectedCategory: 0,
       categoriesData: null,
       materialsData: null,
-      checkedMaterials: [],
-      checkedSeson: [],
+      currentCheckedMaterials: [],
+      currentСheckedSeson: [],
       colorsData: null,
       checkedColor: [],
     };
   },
-  props: ["priceFrom", "priceTo"],
+  props: ["priceFrom", "priceTo", "checkedMaterials", "checkedSeson", "selectedCategory"],
   computed: {
     categories() {
       return this.categoriesData ? this.categoriesData.items : [];
@@ -160,9 +167,9 @@ export default {
     submit() {
       this.$emit("update:priceFrom", this.currentPriceFrom);
       this.$emit("update:priceTo", this.currentPriceTo);
-      this.$emit("update:checkedMaterials", this.checkedMaterials);
-      this.$emit("update:checkedSeson", this.checkedSeson);
-      this.$emit("update:selectedCategory", this.selectedCategory);
+      this.$emit("update:checkedMaterials", this.currentCheckedMaterials);
+      this.$emit("update:checkedSeson", this.currentСheckedSeson);
+      this.$emit("update:selectedCategory", this.currentSelectedCategory);
       this.$emit("update:checkedColor", this.checkedColor);
     },
     loadCategories: async function () {
@@ -186,6 +193,14 @@ export default {
           .then((response) => (this.colorsData = response.data));
       } catch (error) {}
     },
+    reset() {
+      this.$emit("update:priceFrom", 0);
+      this.$emit("update:priceTo", 0);
+      this.$emit("update:checkedMaterials", []);
+      this.$emit("update:checkedSeson", []);
+      this.$emit("update:selectedCategory", 0);
+      this.$emit("update:checkedColor", []);
+    },
   },
   watch: {
     priceFrom(value) {
@@ -193,6 +208,15 @@ export default {
     },
     priceTo(value) {
       this.currentPriceTo = value;
+    },
+    checkedMaterials(value) {
+      this.currentCheckedMaterials = value;
+    },
+    сheckedSeson(value) {
+      this.currentСheckedSeson = value;
+    },
+    selectedCategory(value) {
+      this.currentSelectedCategory = value;
     },
   },
   created() {

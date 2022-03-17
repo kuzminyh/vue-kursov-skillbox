@@ -36,6 +36,8 @@ export default {
   components: { ProductList, ProductFilter, BasePagination },
   data() {
     return {
+      productPerPage: 3,
+      page: 1,
       productsData: null,
       filterPriceFrom: 0,
       filterPriceTo: 0,
@@ -68,6 +70,7 @@ export default {
         const resp = await axios
           .get(API_BASE_URL + "/api/products", {
             params: {
+              page: this.page,
               minPrice: this.filterPriceFrom,
               maxPrice: this.filterPriceTo,
               materialIds: this.filterMaterials,
@@ -110,7 +113,6 @@ export default {
       this.loadProducts();
     },
     filterColor() {
-      alert(5);
       this.loadProducts();
     },
   },

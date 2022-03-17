@@ -5,7 +5,7 @@
         <input
           class="colors__radio sr-only"
           type="checkbox"
-          :value="item.code"
+          :value="item.id"
           v-model="checkedColor1"
         />
         <span class="colors__value" :style="{ background: item.code }"> </span>

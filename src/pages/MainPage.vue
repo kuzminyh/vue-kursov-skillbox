@@ -18,7 +18,7 @@
         />
         <section class="catalog">
           <ProductList :products="products" />
-          <BasePagination />
+          <BasePagination :totalPages="totalPages" :page="page" v-on:paginate="paginate" />
         </section>
       </div>
     </main>
@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       productPerPage: 3,
+      totalPages: 0,
       page: 1,
       productsData: null,
       filterPriceFrom: 0,
@@ -81,12 +82,17 @@ export default {
           })
           .then((response) => {
             this.productsData = response.data;
+            this.totalPages = response.data.pagination.total;
             console.log(3);
           });
       } catch (err) {
         console.log("error 5=", err);
       }
       console.log("this.productsData=", this.productsData);
+    },
+    paginate(value) {
+      this.page = value;
+      this.loadProducts();
     },
   },
   created() {

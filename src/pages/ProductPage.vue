@@ -31,7 +31,7 @@
           <span class="item__code">Артикул: 150030</span>
           <h2  class="item__title">{{ product.title }}</h2>
           <div class="item__form">
-            <form class="form" action="#" method="POST">
+            <form class="form" action="#" method="POST" @submit.prevent="addToCart">
               <div class="item__row item__row--center">
                 <div class="form__counter">
                   <button type="button" aria-label="Убрать один товар">
@@ -138,11 +138,13 @@
 <script>
 import axios from "axios";
 import { API_BASE_URL } from "../config";
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
       productData: null,
       productLoad: false,
+      productAdd: false,
     };
   },
   computed: {
@@ -153,6 +155,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addToCartData']),
     loadProduct: async function () {
       this.productLoad = false;
       const resp = axios
@@ -163,6 +166,11 @@ export default {
           console.log(response.data);
         });
     },
+    addToCart() {
+      this.productAdd = false;
+      this.addToCartData({productId: this.product.id } )
+    }
+
   },
   watch: {
     "$route.params.id": {

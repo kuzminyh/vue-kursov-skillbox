@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
+import axios from 'axios'
+import { API_BASE_URL } from "../config";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,8 +13,18 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
-    addToCartData() {
-      console.log(5);
+    addToCartData: async function(){
+      try {
+        const res = await axios
+        .post(API_BASE_URL + '/api/baskets/products',{
+          params: {
+
+          }
+        })
+
+      } catch (error) {
+
+      }
     },
   },
   modules: {

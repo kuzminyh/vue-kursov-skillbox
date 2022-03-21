@@ -4,3 +4,4 @@ src/pages/*.vue
 src/router/*.js
 src/*.js
 src/helpers/*.js
+src/store/*.js

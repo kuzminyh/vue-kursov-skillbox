@@ -4,10 +4,10 @@
       <div class="content__top">
         <ul class="breadcrumbs">
           <li class="breadcrumbs__item">
-            <router-link class="breadcrumbs__link" :to="{name: 'main'}"> Каталог </router-link>
+            <router-link class="breadcrumbs__link" :to="{ name: 'main' }"> Каталог </router-link>
           </li>
           <li class="breadcrumbs__item">
-            <a class="breadcrumbs__link" href="#"> {{ product.category.title}} </a>
+            <a class="breadcrumbs__link" href="#"> {{ product.category.title }} </a>
           </li>
           <li class="breadcrumbs__item">
             <a class="breadcrumbs__link"> {{ product.title }} </a>
@@ -29,64 +29,44 @@
 
         <div class="item__info">
           <span class="item__code">Артикул: 150030</span>
-          <h2  class="item__title">{{ product.title }}</h2>
+          <h2 class="item__title">{{ product.title }}</h2>
           <div class="item__form">
             <form class="form" action="#" method="POST" @submit.prevent="addToCart">
               <div class="item__row item__row--center">
-                <div class="form__counter">
-                  <button type="button" aria-label="Убрать один товар">
-                    <svg width="12" height="12" fill="currentColor">
-                      <use xlink:href="#icon-minus"></use>
-                    </svg>
-                  </button>
-
-                  <input type="text" value="1" name="count" />
-
-                  <button type="button" aria-label="Добавить один товар">
-                    <svg width="12" height="12" fill="currentColor">
-                      <use xlink:href="#icon-plus"></use>
-                    </svg>
-                  </button>
-                </div>
-
+                <counter-product :count="count" @change="changeCount" />
                 <b class="item__price">{{ product.price }} ₽ </b>
               </div>
 
               <div class="item__row">
                 <fieldset class="form__block">
                   <legend class="form__legend">Цвет</legend>
-                    <ul class="colors colors--black" v-if="product">
-
-                      <li class="colors__item" v-for="colorItem in product.colors" :key="colorItem.id">
+                  <ul class="colors colors--black" v-if="product">
+                    <li
+                      class="colors__item"
+                      v-for="colorItem in product.colors"
+                      :key="colorItem.id"
+                    >
                       <!-- <span> productLoad = </span> {{colorItem}} -->
-                       <label class="colors__label">
-                          <input class="colors__radio sr-only"
-                            type="radio"
-                            name="color-item"
-                            :value="colorItem.id"
-                            checked=""
-                          />
-                          <span
-                            class="colors__value"
-                            :style="{ background: colorItem.color.code }"
-                          >
-                          </span>
-                        </label>
-                      </li>
-                    </ul>
+                      <label class="colors__label">
+                        <input
+                          class="colors__radio sr-only"
+                          type="radio"
+                          name="color-item"
+                          :value="colorItem.id"
+                          checked=""
+                        />
+                        <span class="colors__value" :style="{ background: colorItem.color.code }">
+                        </span>
+                      </label>
+                    </li>
+                  </ul>
                 </fieldset>
 
                 <fieldset class="form__block">
                   <legend class="form__legend">Размер</legend>
-                  <label
-                    class="form__label form__label--small form__label--select"
-                  >
+                  <label class="form__label form__label--small form__label--select">
                     <select class="form__select" type="text" name="category">
-                      <option
-                        value="value1"
-                        v-for="size in product.sizes"
-                        :key="size.id"
-                      >
+                      <option value="value1" v-for="size in product.sizes" :key="size.id">
                         {{ size.title }}
                       </option>
                     </select>
@@ -94,9 +74,7 @@
                 </fieldset>
               </div>
 
-              <button class="item__button button button--primery" type="submit">
-                В корзину
-              </button>
+              <button class="item__button button button--primery" type="submit">В корзину</button>
             </form>
           </div>
         </div>
@@ -104,9 +82,7 @@
         <div class="item__desc">
           <ul class="tabs">
             <li class="tabs__item">
-              <a class="tabs__link tabs__link--current">
-                Информация о товаре
-              </a>
+              <a class="tabs__link tabs__link--current"> Информация о товаре </a>
             </li>
             <li class="tabs__item">
               <a class="tabs__link" href="#"> Доставка и возврат </a>
@@ -117,7 +93,9 @@
             <h3>Состав:</h3>
 
             <p>
-             <span  v-for="mater in product.materials" :key="mater.id"> {{mater.title}} <br /></span>
+              <span v-for="mater in product.materials" :key="mater.id">
+                {{ mater.title }} <br
+              /></span>
             </p>
 
             <h3>Уход:</h3>
@@ -138,24 +116,28 @@
 <script>
 import axios from "axios";
 import { API_BASE_URL } from "../config";
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
+import CounterProduct from "../components/CounterProduct.vue";
 export default {
+  components: { CounterProduct },
   data() {
     return {
       productData: null,
       productLoad: false,
       productAdd: false,
+      count: 1,
     };
   },
   computed: {
     product() {
-      console.log("product=", this.productData);
-      return  this.productData ? this.productData : {} ;
+      console.log("product=", this.productData ? this.productData : {});
+      return this.productData ? this.productData : {};
+
       // return this.productData;
     },
   },
   methods: {
-    ...mapActions(['addToCartData']),
+    ...mapActions(["addToCartData"]),
     loadProduct: async function () {
       this.productLoad = false;
       const resp = axios
@@ -168,9 +150,13 @@ export default {
     },
     addToCart() {
       this.productAdd = false;
-      this.addToCartData({productId: this.product.id } )
-    }
-
+      this.addToCartData({ productId: this.product.id });
+    },
+    changeCount(value) {
+      if (value > 0) {
+        this.count = value;
+      }
+    },
   },
   watch: {
     "$route.params.id": {

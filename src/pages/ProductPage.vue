@@ -53,6 +53,7 @@
                           type="radio"
                           name="color-item"
                           :value="colorItem.id"
+                          v-model="colorItemId"
                           checked=""
                         />
                         <span class="colors__value" :style="{ background: colorItem.color.code }">
@@ -65,8 +66,8 @@
                 <fieldset class="form__block">
                   <legend class="form__legend">Размер</legend>
                   <label class="form__label form__label--small form__label--select">
-                    <select class="form__select" type="text" name="category">
-                      <option value="value1" v-for="size in product.sizes" :key="size.id">
+                    <select class="form__select" type="text" name="category" v-model="sizeId">
+                      <option :value="size.id" v-for="size in product.sizes" :key="size.id">
                         {{ size.title }}
                       </option>
                     </select>
@@ -126,6 +127,8 @@ export default {
       productLoad: false,
       productAdd: false,
       count: 1,
+      colorItemId: 0,
+      sizeId: 0,
     };
   },
   computed: {
@@ -149,8 +152,14 @@ export default {
         });
     },
     addToCart() {
+      alert(this.colorItemId - 20);
       this.productAdd = false;
-      this.addToCartData({ productId: this.product.id });
+      this.addToCartData({
+        productId: this.product.id,
+        colorItemId: this.colorItemId - 20,
+        sizeId: this.sizeId,
+        quantity: this.count,
+      });
     },
     changeCount(value) {
       if (value > 0) {

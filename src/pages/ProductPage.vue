@@ -52,7 +52,7 @@
                           class="colors__radio sr-only"
                           type="radio"
                           name="color-item"
-                          :value="colorItem.id"
+                          :value="colorItem.color.id"
                           v-model="colorItemId"
                           checked=""
                         />
@@ -152,11 +152,11 @@ export default {
         });
     },
     addToCart() {
-      alert(this.colorItemId - 20);
+      alert(this.colorItemId);
       this.productAdd = false;
       this.addToCartData({
         productId: this.product.id,
-        colorItemId: this.colorItemId - 20,
+        colorItemId: this.colorItemId,
         sizeId: this.sizeId,
         quantity: this.count,
       });

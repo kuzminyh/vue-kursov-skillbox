@@ -9,14 +9,15 @@ export default new Vuex.Store({
     cartProducts: [],
     userAccessKey: null,
     cartProductsData: [],
+    userAccessKey: null,
   },
   mutations: {},
   actions: {
-    addToCartData: async function (context, { productId, colorId, sizeId, quantity }) {
+    addToCartData: async function (context, { productId, colorItemId, sizeId, quantity }) {
       try {
         const res = await axios.post(API_BASE_URL + "/api/baskets/products", {
           productId: productId,
-          colorId: colorId,
+          colorId: colorItemId,
           sizeId: sizeId,
           quantity: quantity,
         });

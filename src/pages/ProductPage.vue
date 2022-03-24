@@ -1,6 +1,7 @@
 <template>
   <div>
-    <main class="content container">
+    <!-- <main class="content container" v-if="productLoad"> </main> -->
+    <main class="content container" v-if="productData">
       <div class="content__top">
         <ul class="breadcrumbs">
           <li class="breadcrumbs__item">

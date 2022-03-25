@@ -1,14 +1,33 @@
 /* eslint-disable */
 <template>
   <div>
+    <header class="header container">
+      <div class="header__wrapper">
+        <span class="header__info">Каталог</span>
+
+        <a class="header__logo" href="#">
+          <img
+            src="img/svg/logo-moire.svg"
+            alt="Логотип интернет магазина Moire"
+            width="116"
+            height="34"
+          />
+        </a>
+
+        <a class="header__tel" href="tel:8 800 600 90 09"> 8 800 600 90 09 </a>
+        <CartIndicator />
+      </div>
+    </header>
     <router-view />
   </div>
 </template>
 
 <script>
+import CartIndicator from "@/components/CartIndicator.vue";
 import { mapActions, mapMutations } from "vuex";
 
 export default {
+  components: { CartIndicator },
   created() {
     this.loadCart();
     const userAccessKey = localStorage.getItem("userAccessKey");

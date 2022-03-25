@@ -66,6 +66,7 @@ export default new Vuex.Store({
           context.commit("updateUserAccessKey", res.data.user.accessKey);
         }
         context.commit("updateCartProductData", res.data.items);
+        context.commit("synCartProducts");
       } catch (error) {}
     },
   },

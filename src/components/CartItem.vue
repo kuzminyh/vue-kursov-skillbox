@@ -9,7 +9,7 @@
         alt="Название товара"
       />
     </div>
-    <h3 class="product__title">Базовая хлопковая футболка</h3>
+    <h3 class="product__title">{{ item }} {{ item.product.title }}</h3>
     <p class="product__info product__info--color">
       Цвет:
       <span>
@@ -18,22 +18,24 @@
       </span>
     </p>
     <span class="product__code"> Артикул: 1501230 </span>
+    <counter-product :count="amount" @change="changeCount" />
 
-    <div class="product__counter form__counter">
-      <button type="button" aria-label="Убрать один товар">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-minus"></use>
-        </svg>
-      </button>
+    <!-- <div class="product__counter form__counter">
+        <button type="button" aria-label="Убрать один товар">
+          <svg width="10" height="10" fill="currentColor">
+            <use xlink:href="#icon-minus"></use>
+          </svg>
+        </button>
 
-      <input type="text" value="1" name="count" />
 
-      <button type="button" aria-label="Добавить один товар">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-plus"></use>
-        </svg>
-      </button>
-    </div>
+        <input type="text" value="1" name="count" />
+
+        <button type="button" aria-label="Добавить один товар">
+          <svg width="10" height="10" fill="currentColor">
+            <use xlink:href="#icon-plus"></use>
+          </svg>
+        </button>
+      </div> -->
 
     <b class="product__price"> 990 ₽ </b>
 
@@ -44,3 +46,30 @@
     </button>
   </li>
 </template>
+<script>
+import CounterProduct from "./CounterProduct.vue";
+export default {
+  components: { CounterProduct },
+  props: ["item"],
+  computed: {
+    amount: {
+      get() {
+        return this.item.quantity;
+      },
+      set(value) {
+        this.$store.dispatch("updateCartProductAmount", {
+          productId: this.item.product.id,
+          amount: value,
+        });
+      },
+    },
+  },
+  methods: {
+    changeCount(value) {
+      if (value > 0) {
+        this.amount = value;
+      }
+    },
+  },
+};
+</script>

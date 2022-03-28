@@ -27,6 +27,20 @@ export default new Vuex.Store({
     synCartProducts(state) {
       state.cartProducts = state.cartProductsData;
     },
+    updateCartProductAmount(state, { productId, amount }) {
+      const item = state.cartProducts.find((item) => {
+        item.productId === productId;
+      });
+      if (item) {
+        item.amount = amount;
+      }
+    },
+  },
+  getters: {
+    cartProductsDetail(state) {
+      console.log();
+      return state.cartProducts;
+    },
   },
   actions: {
     async addToCartData(context, { productId, colorItemId, sizeId, quantity }) {
@@ -46,6 +60,7 @@ export default new Vuex.Store({
           }
         );
         context.commit("updateCartProductData", res.data.items);
+        context.commit("synCartProducts");
         // console.log("res.data.user.id=", res.data.user.id);
         // const dataUser = {
         //   accessKey: res.data.user.accessKey,
@@ -68,6 +83,9 @@ export default new Vuex.Store({
         context.commit("updateCartProductData", res.data.items);
         context.commit("synCartProducts");
       } catch (error) {}
+    },
+    updateCartProductAmount(context, { productId, amount }) {
+      context.commit("updateCartProductAmount", { productId, amount });
     },
   },
   modules: {},

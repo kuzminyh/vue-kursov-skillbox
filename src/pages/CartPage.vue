@@ -20,7 +20,7 @@
       <form class="cart__form form" action="#" method="POST">
         <div class="cart__field">
           <ul class="cart__list">
-            <CartItem />
+            <CartItem v-for="item in products" :key="item.product.id" :item="item" />
           </ul>
         </div>
         <div class="cart__block">
@@ -35,7 +35,11 @@
 </template>
 <script>
 import CartItem from "@/components/CartItem.vue";
+import { mapGetters } from "vuex";
 export default {
   components: { CartItem },
+  computed: {
+    ...mapGetters({ products: "cartProductsDetail" }),
+  },
 };
 </script>

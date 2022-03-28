@@ -14,7 +14,12 @@
     </li>
 
     <li class="pagination__item" v-for="pageNumber in totalPages" :key="pageNumber">
-      <a class="pagination__link" :class="{ 'pagination__link--current': pageNumber === page }" href="#" @click.prevent="gotoPage(pageNumber) ">
+      <a
+        class="pagination__link"
+        :class="{ 'pagination__link--current': pageNumber === page }"
+        href="#"
+        @click.prevent="gotoPage(pageNumber)"
+      >
         {{ pageNumber }}
       </a>
     </li>
@@ -53,11 +58,10 @@ export default {
         this.$emit("paginate", page - 1);
       }
     },
-    gotoPage(page){
-      alert(page)
-       this.$emit("paginate", page );
-    }
-
+    gotoPage(page) {
+      // alert(page)
+      this.$emit("paginate", page);
+    },
   },
 };
 // <li class="pagination__item" v-for="pageNumber in pages" :key="pageNumber">

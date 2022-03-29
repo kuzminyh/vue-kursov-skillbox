@@ -19,27 +19,14 @@
     </p>
     <span class="product__code"> Артикул: 1501230 </span>
     <counter-product :count="amount" @change="changeCount" />
+    <b class="product__price"> {{ amount * item.price }} ₽ </b>
 
-    <!-- <div class="product__counter form__counter">
-        <button type="button" aria-label="Убрать один товар">
-          <svg width="10" height="10" fill="currentColor">
-            <use xlink:href="#icon-minus"></use>
-          </svg>
-        </button>
-
-
-        <input type="text" value="1" name="count" />
-
-        <button type="button" aria-label="Добавить один товар">
-          <svg width="10" height="10" fill="currentColor">
-            <use xlink:href="#icon-plus"></use>
-          </svg>
-        </button>
-      </div> -->
-
-    <b class="product__price"> 990 ₽ </b>
-
-    <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины">
+    <button
+      class="product__del button-del"
+      type="button"
+      aria-label="Удалить товар из корзины"
+      @click="deleteItemInCart"
+    >
       <svg width="20" height="20" fill="currentColor">
         <use xlink:href="#icon-close"></use>
       </svg>
@@ -47,7 +34,9 @@
   </li>
 </template>
 <script>
+import { mapActions } from "vuex";
 import CounterProduct from "./CounterProduct.vue";
+
 export default {
   components: { CounterProduct },
   props: ["item"],
@@ -65,10 +54,14 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["deleteCartProduct"]),
     changeCount(value) {
       if (value > 0) {
         this.amount = value;
       }
+    },
+    deleteItemInCart() {
+      this.deleteCartProduct(this.item.product.id);
     },
   },
 };

@@ -28,12 +28,21 @@ export default new Vuex.Store({
       state.cartProducts = state.cartProductsData;
     },
     updateCartProductAmount(state, { productId, amount }) {
-      const item = state.cartProducts.find((item) => {
-        item.productId === productId;
-      });
+      console.log("productId=", productId);
+      const item = state.cartProducts.find(
+        (item) =>
+          // console.log("item.product.id", item.product.id === productId);
+          item.product.id === productId
+      );
+      console.log("item", item);
       if (item) {
+        console.log("state.cartProducts=", productId);
         item.amount = amount;
+        item.quantity = amount;
       }
+    },
+    deleteCartProduct(state, productId) {
+      state.cartProducts = state.cartProducts.filter((item) => item.product.id !== productId);
     },
   },
   getters: {
@@ -59,7 +68,12 @@ export default new Vuex.Store({
             },
           }
         );
-        context.commit("updateCartProductData", res.data.items);
+        const resCart = await axios.get(API_BASE_URL + "/api/baskets", {
+          params: {
+            userAccessKey: context.state.userAccessKey,
+          },
+        });
+        context.commit("updateCartProductData", resCart.data.items);
         context.commit("synCartProducts");
         // console.log("res.data.user.id=", res.data.user.id);
         // const dataUser = {
@@ -69,6 +83,7 @@ export default new Vuex.Store({
         // context.commit("getUserAccessKey", dataUser);
       } catch (error) {}
     },
+
     async loadCart(context) {
       try {
         const res = await axios.get(API_BASE_URL + "/api/baskets", {
@@ -86,6 +101,9 @@ export default new Vuex.Store({
     },
     updateCartProductAmount(context, { productId, amount }) {
       context.commit("updateCartProductAmount", { productId, amount });
+    },
+    deleteCartProduct(context, productId) {
+      context.commit("deleteCartProduct", productId);
     },
   },
   modules: {},

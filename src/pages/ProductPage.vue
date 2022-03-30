@@ -55,7 +55,6 @@
                           name="color-item"
                           :value="colorItem.color.id"
                           v-model="colorItemId"
-                          checked=""
                         />
                         <span class="colors__value" :style="{ background: colorItem.color.code }">
                         </span>
@@ -128,7 +127,7 @@ export default {
       productLoad: false,
       productAdd: false,
       count: 1,
-      colorItemId: 0,
+      // colorItemId: 0,
       sizeId: 0,
     };
   },
@@ -136,8 +135,10 @@ export default {
     product() {
       console.log("product=", this.productData ? this.productData : {});
       return this.productData ? this.productData : {};
-
       // return this.productData;
+    },
+    colorItemId() {
+      return this.product.colors[0].color.id;
     },
   },
   methods: {

@@ -35,7 +35,7 @@
             <form class="form" action="#" method="POST" @submit.prevent="addToCart">
               <div class="item__row item__row--center">
                 <counter-product :count="count" @change="changeCount" />
-                <b class="item__price">{{ product.price }} ₽ </b>
+                <b class="item__price">{{ product.price * count }} ₽ </b>
               </div>
 
               <div class="item__row">
@@ -154,7 +154,7 @@ export default {
         });
     },
     addToCart() {
-      alert(this.colorItemId);
+      // alert(this.colorItemId);
       this.productAdd = false;
       this.addToCartData({
         productId: this.product.id,

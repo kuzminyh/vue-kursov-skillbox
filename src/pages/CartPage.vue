@@ -27,7 +27,15 @@
           <p class="cart__desc">Мы&nbsp;посчитаем стоимость доставки на&nbsp;следующем этапе</p>
           <p class="cart__price">Итого: <span>4 070 ₽</span></p>
 
-          <button class="cart__button button button--primery" type="submit">Оформить заказ</button>
+          <router-link
+            tag="button"
+            :to="{ name: 'order' }"
+            v-if="products.length > 0"
+            class="cart__button button button--primery"
+            type="submit"
+          >
+            Оформить заказ
+          </router-link>
         </div>
       </form>
     </section>

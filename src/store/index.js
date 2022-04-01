@@ -47,12 +47,24 @@ export default new Vuex.Store({
   },
   getters: {
     cartProductsDetail(state) {
-      console.log();
-      return state.cartProducts;
+      const prod = state.cartProducts.map((item) => {
+        console.log("item=", item);
+        if (item.color.gallery !== null) {
+          return {
+            ...item,
+            image: item.color.gallery[0].file.url,
+            color1: item.color.color.code,
+          };
+        }
+      });
+      console.log("prod=", prod);
+      return prod;
+      // return state.cartProducts;
     },
   },
   actions: {
     async addToCartData(context, { productId, colorItemId, sizeId, quantity }) {
+      console.log("context.state.userAccessKey=", context.state.userAccessKey);
       try {
         const res = await axios.post(
           API_BASE_URL + "/api/baskets/products",
@@ -91,12 +103,13 @@ export default new Vuex.Store({
             userAccessKey: context.state.userAccessKey,
           },
         });
-        if (!context.state.userAccessKey) {
-          localStorage.setItem("userAccessKey", res.data.user.accessKey);
-          context.commit("updateUserAccessKey", res.data.user.accessKey);
-        }
+        // if (!context.state.userAccessKey) {
+        localStorage.setItem("userAccessKey", res.data.user.accessKey);
+        context.commit("updateUserAccessKey", res.data.user.accessKey);
+        // }
         context.commit("updateCartProductData", res.data.items);
         context.commit("synCartProducts");
+        console.log("context.state.userAccessKey=", context.state.userAccessKey);
       } catch (error) {}
     },
     updateCartProductAmount(context, { productId, amount }) {

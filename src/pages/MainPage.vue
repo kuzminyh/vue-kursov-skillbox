@@ -52,7 +52,6 @@ export default {
     products() {
       const result = this.productsData
         ? this.productsData.items.map((p) => {
-            console.log("p.id=", p.id);
             if (p.colors[0].gallery !== null) {
               return {
                 ...p,

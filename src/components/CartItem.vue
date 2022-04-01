@@ -2,18 +2,18 @@
   <li class="cart__item product">
     <div class="product__pic">
       <img
-        src="img/product-square-4.jpg"
+        :src="item.image"
         width="120"
         height="120"
         srcset="img/product-square-4@2x.jpg 2x"
         alt="Название товара"
       />
     </div>
-    <h3 class="product__title">{{ item }} {{ item.product.title }}</h3>
+    <h3 class="product__title">{{ item.product.title }}</h3>
     <p class="product__info product__info--color">
       Цвет:
       <span>
-        <i style="background-color: #ff9b78"></i>
+        <i :style="{ background: item.color1 }"></i>
         Персиковый
       </span>
     </p>

@@ -12,6 +12,7 @@ export default new Vuex.Store({
     userAccessKey: null,
     userId: 0,
     cartProductsData: [],
+    // totalPrice: 0,
   },
   mutations: {
     updateCartProductData(state, items) {
@@ -61,6 +62,7 @@ export default new Vuex.Store({
       return prod;
       // return state.cartProducts;
     },
+    totalPrice(state) {},
   },
   actions: {
     async addToCartData(context, { productId, colorItemId, sizeId, quantity }) {

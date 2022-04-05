@@ -19,53 +19,39 @@
     </div>
 
     <section class="cart">
-      <form class="cart__form form" action="#" method="POST">
+      <form class="cart__form form" action="#" method="POST" @submit.prevent="order">
         <div class="cart__field">
           <div class="cart__data">
-            <label class="form__label">
-              <input
-                class="form__input"
-                type="text"
-                name="name"
-                placeholder="Введите ваше полное имя"
-              />
-              <span class="form__value">ФИО</span>
-            </label>
-
-            <label class="form__label">
-              <input
-                class="form__input"
-                type="text"
-                name="address"
-                placeholder="Введите ваш адрес"
-              />
-              <span class="form__value">Адрес доставки</span>
-            </label>
-
-            <label class="form__label">
-              <input
-                class="form__input"
-                type="tel"
-                name="phone"
-                placeholder="Введите ваш телефон"
-              />
-              <span class="form__value">Телефон</span>
-              <span class="form__error">Неверный формат телефона</span>
-            </label>
-
-            <label class="form__label">
-              <input class="form__input" type="email" name="email" placeholder="Введи ваш Email" />
-              <span class="form__value">Email</span>
-            </label>
-
-            <label class="form__label">
-              <textarea
-                class="form__input form__input--area"
-                name="comments"
-                placeholder="Ваши пожелания"
-              ></textarea>
-              <span class="form__value">Комментарий к заказу</span>
-            </label>
+            <BaseFormText
+              v-model="formData.name"
+              :error="formError.name"
+              title="ФИО"
+              placeholder="Введите ваше полное имя"
+            />
+            <BaseFormText
+              v-model="formData.address"
+              :error="formError.address"
+              title=">Адрес доставки"
+              placeholder="Введите ваш адрес"
+            />
+            <BaseFormText
+              v-model="formData.phone"
+              :error="formError.phone"
+              title="Телефон"
+              placeholder="Введите ваш телефон"
+            />
+            <BaseFormText
+              v-model="formData.email"
+              :error="formError.email"
+              title="Email"
+              placeholder="Введи ваш Email"
+            />
+            <BaseFormTextArea
+              title="Комментарий к заказу"
+              v-model="formData.comment"
+              :error="formError.comments"
+              placeholder="Ваши пожелания"
+            />
           </div>
 
           <div class="cart__options">
@@ -77,7 +63,8 @@
                     class="options__radio sr-only"
                     type="radio"
                     name="delivery"
-                    value="0"
+                    value="1"
+                    v-model="formData.deliveryTypeId"
                     checked=""
                   />
                   <span class="options__value"> Самовывоз <b>бесплатно</b> </span>
@@ -85,7 +72,13 @@
               </li>
               <li class="options__item">
                 <label class="options__label">
-                  <input class="options__radio sr-only" type="radio" name="delivery" value="500" />
+                  <input
+                    class="options__radio sr-only"
+                    type="radio"
+                    name="delivery"
+                    v-model="formData.deliveryTypeId"
+                    value="2"
+                  />
                   <span class="options__value"> Курьером <b>290 ₽</b> </span>
                 </label>
               </li>
@@ -99,15 +92,22 @@
                     class="options__radio sr-only"
                     type="radio"
                     name="pay"
-                    value="card"
+                    value="1"
                     checked=""
+                    v-model="formData.paymentTypeId"
                   />
                   <span class="options__value"> Картой при получении </span>
                 </label>
               </li>
               <li class="options__item">
                 <label class="options__label">
-                  <input class="options__radio sr-only" type="radio" name="pay" value="cash" />
+                  <input
+                    class="options__radio sr-only"
+                    type="radio"
+                    name="pay"
+                    value="2"
+                    v-model="formData.paymentTypeId"
+                  />
                   <span class="options__value"> Наличными при получении </span>
                 </label>
               </li>
@@ -126,9 +126,40 @@
 </template>
 <script>
 import OrderItem from "@/components/OrderItem.vue";
+import BaseFormText from "@/components/BaseFormText.vue";
+import BaseFormTextArea from "@/components/BaseFormTextArea.vue";
+import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 export default {
-  components: { OrderItem },
-  // props: ['products']
+  data() {
+    return {
+      delivery: 1,
+      payment: 1,
+      formData: {
+        deliveryTypeId: 1,
+        paymentTypeId: 1,
+      },
+      formError: {},
+    };
+  },
+  components: { OrderItem, BaseFormText, BaseFormTextArea },
+  methods: {
+    async order() {
+      try {
+        const res = await axios.post(
+          API_BASE_URL + "/api/orders",
+          {
+            ...this.formData,
+          },
+          {
+            params: {
+              userAccessKey: this.$store.state.userAccessKey,
+            },
+          }
+        );
+      } catch (error) {}
+    },
+  },
 };
 </script>

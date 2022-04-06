@@ -120,6 +120,7 @@ export default new Vuex.Store({
     deleteCartProduct(context, productId) {
       context.commit("deleteCartProduct", productId);
     },
+    // async load
   },
   modules: {},
 });

@@ -1,5 +1,5 @@
 <template>
-  <base-form-field>
+  <base-form-field :title="title" :error="error">
     <input class="form__input" :type="type" v-model="dataValue" :placeholder="placeholder" />
   </base-form-field>
 </template>

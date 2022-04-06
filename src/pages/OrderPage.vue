@@ -116,7 +116,7 @@
         </div>
 
         <order-item />
-        <div class="cart__error form__error-block">
+        <div class="cart__error form__error-block" v-if="isError">
           <h4>Заявка не отправлена!</h4>
           <p>Похоже произошла ошибка. Попробуйте отправить снова или перезагрузите страницу.</p>
         </div>
@@ -134,6 +134,7 @@ import { API_BASE_URL } from "../config";
 export default {
   data() {
     return {
+      isError: false,
       delivery: 1,
       payment: 1,
       formData: {
@@ -158,7 +159,12 @@ export default {
             },
           }
         );
-      } catch (error) {}
+        this.isError = false;
+      } catch (error) {
+        // console.log("error=", error.response.data.error.request);
+        this.formError = error.response.data.error.request;
+        this.isError = true;
+      }
     },
   },
 };

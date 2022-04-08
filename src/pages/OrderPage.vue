@@ -115,7 +115,7 @@
           </div>
         </div>
 
-        <order-item />
+        <order-item :cartProducts="cartProducts" :fromOrderInfoPage="fromOrderInfoPage" />
         <div class="cart__error form__error-block" v-if="isError">
           <h4>Заявка не отправлена!</h4>
           <p>Похоже произошла ошибка. Попробуйте отправить снова или перезагрузите страницу.</p>
@@ -129,6 +129,7 @@ import OrderItem from "@/components/OrderItem.vue";
 import BaseFormText from "@/components/BaseFormText.vue";
 import BaseFormTextArea from "@/components/BaseFormTextArea.vue";
 import axios from "axios";
+import { mapGetters } from "vuex";
 import { API_BASE_URL } from "../config";
 
 export default {
@@ -142,6 +143,7 @@ export default {
         paymentTypeId: 1,
       },
       formError: {},
+      fromOrderInfoPage: false,
     };
   },
   components: { OrderItem, BaseFormText, BaseFormTextArea },
@@ -159,13 +161,20 @@ export default {
             },
           }
         );
+        // console.log("res=", res.data);
         this.isError = false;
+        this.$store.commit("resetCart");
+        this.$store.commit("updateOrderInfo", res.data);
+        this.$router.push({ name: "orderInfo", params: { id: res.data.id } });
       } catch (error) {
         // console.log("error=", error.response.data.error.request);
         this.formError = error.response.data.error.request;
         this.isError = true;
       }
     },
+  },
+  computed: {
+    ...mapGetters({ cartProducts: "cartProductsDetail" }),
   },
 };
 </script>

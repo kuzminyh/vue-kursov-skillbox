@@ -15,13 +15,17 @@
     </ul>
 
     <div class="cart__total">
-      <p>Доставка: <b>бесплатно</b></p>
+      <p>
+        Доставка: <b> {{ delivery }} </b>
+      </p>
       <p>
         Итого: <b> {{ cartProducts.length }} </b> товара на сумму <b>{{ totalSum }}</b>
       </p>
     </div>
 
-    <button class="cart__button button button--primery" type="submit">Оформить заказ</button>
+    <button v-if="!fromOrderInfoPage" class="cart__button button button--primery" type="submit">
+      Оформить заказ
+    </button>
   </div>
 </template>
 
@@ -29,8 +33,9 @@
 import { mapGetters } from "vuex";
 
 export default {
+  props: ["cartProducts", "fromOrderInfoPage", "delivery"],
   computed: {
-    ...mapGetters({ cartProducts: "cartProductsDetail" }),
+    // ...mapGetters({ cartProducts: "cartProductsDetail" }),
     totalSum() {
       return this.cartProducts.reduce((sum, current) => sum + current.price * current.quantity, 0);
     },

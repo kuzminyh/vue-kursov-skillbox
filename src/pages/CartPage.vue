@@ -25,7 +25,9 @@
         </div>
         <div class="cart__block">
           <p class="cart__desc">Мы&nbsp;посчитаем стоимость доставки на&nbsp;следующем этапе</p>
-          <p class="cart__price">Итого: <span>4 070 ₽</span></p>
+          <p class="cart__price">
+            Итого: <span>{{ totalPrice }} ₽</span>
+          </p>
 
           <router-link
             tag="button"
@@ -48,6 +50,10 @@ export default {
   components: { CartItem },
   computed: {
     ...mapGetters({ products: "cartProductsDetail" }),
+    totalPrice() {
+      console.log("products=", this.products);
+      return this.products.reduce((sum, current) => sum + current.price * current.quantity, 0);
+    },
   },
 };
 </script>

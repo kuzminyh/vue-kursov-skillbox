@@ -13,7 +13,9 @@
         </li>
       </ul>
 
-      <h1 class="content__title">Заказ оформлен <span>№ 23621</span></h1>
+      <h1 class="content__title">
+        Заказ оформлен <span>№ {{ orderInfo.id }} </span>
+      </h1>
     </div>
 
     <section class="cart">
@@ -28,59 +30,58 @@
           <ul class="dictionary">
             <li class="dictionary__item">
               <span class="dictionary__key"> Получатель </span>
-              <span class="dictionary__value"> Иванова Василиса Алексеевна </span>
+              <span class="dictionary__value"> {{ orderInfo.name }} </span>
             </li>
             <li class="dictionary__item">
               <span class="dictionary__key"> Адрес доставки </span>
-              <span class="dictionary__value"> Москва, ул. Ленина, 21, кв. 33 </span>
+              <span class="dictionary__value"> {{ orderInfo.address }} </span>
             </li>
             <li class="dictionary__item">
               <span class="dictionary__key"> Телефон </span>
-              <span class="dictionary__value"> 8 800 989 74 84 </span>
+              <span class="dictionary__value"> {{ orderInfo.phone }} </span>
             </li>
             <li class="dictionary__item">
               <span class="dictionary__key"> Email </span>
-              <span class="dictionary__value"> lalala@mail.ru </span>
+              <span class="dictionary__value"> {{ orderInfo.email }} </span>
             </li>
             <li class="dictionary__item">
               <span class="dictionary__key"> Способ оплаты </span>
-              <span class="dictionary__value"> картой при получении </span>
+              <span class="dictionary__value"> {{ orderInfo.paymentType }} </span>
             </li>
           </ul>
         </div>
-
-        <div class="cart__block">
-          <ul class="cart__orders">
-            <li class="cart__order">
-              <h3>Смартфон Xiaomi Redmi Note 7 Pro 6/128GB</h3>
-              <b>990 ₽</b>
-              <span>Артикул: 150030</span>
-            </li>
-            <li class="cart__order">
-              <h3>Гироскутер Razor Hovertrax 2.0ii</h3>
-              <b>1 990 ₽</b>
-              <span>Артикул: 150030</span>
-            </li>
-            <li class="cart__order">
-              <h3>Электрический дрифт-карт Razor Lil’ Crazy</h3>
-              <b>4 090 ₽</b>
-              <span>Артикул: 150030</span>
-            </li>
-          </ul>
-
-          <div class="cart__total">
-            <p>Доставка: <b>бесплатно</b></p>
-            <p>Итого: <b>3</b> товара на сумму <b>4 070 ₽</b></p>
-          </div>
-        </div>
+        <OrderItem
+          :cartProducts="cartProducts"
+          :fromOrderInfoPage="fromOrderInfoPage"
+          :delivery="delivery"
+        />
       </form>
     </section>
   </main>
 </template>
 <script>
+import OrderItem from "@/components/OrderItem.vue";
 export default {
+  data() {
+    return {
+      fromOrderInfoPage: true,
+    };
+  },
+  components: { OrderItem },
+  computed: {
+    cartProducts() {
+      console.log("this.$store.state.orderInfo=", this.$store.state.orderInfo);
+      return this.$store.state.orderInfo.basket.items;
+    },
+    orderInfo() {
+      return this.$store.state.orderInfo;
+    },
+    delivery() {
+      return this.$store.state.orderInfo.deliveryType.title;
+    },
+  },
   created() {
-    this.$store.dispatch("loadOrderInfo");
+    this.$store.dispatch("loadOrderInfo", this.$route.params.id);
   },
 };
 </script>

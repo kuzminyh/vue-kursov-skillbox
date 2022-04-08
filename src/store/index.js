@@ -11,7 +11,7 @@ export default new Vuex.Store({
     cartProductsData: [],
     userAccessKey: null,
     userId: 0,
-    cartProductsData: [],
+    orderInfo: null,
     // totalPrice: 0,
   },
   mutations: {
@@ -44,6 +44,13 @@ export default new Vuex.Store({
     },
     deleteCartProduct(state, productId) {
       state.cartProducts = state.cartProducts.filter((item) => item.product.id !== productId);
+    },
+    resetCart(state) {
+      state.cartProducts = [];
+      state.cartProductsData = [];
+    },
+    updateOrderInfo(state, orderInfo) {
+      state.orderInfo = orderInfo;
     },
   },
   getters: {
@@ -120,7 +127,17 @@ export default new Vuex.Store({
     deleteCartProduct(context, productId) {
       context.commit("deleteCartProduct", productId);
     },
-    // async load
+    async loadOrderInfo(context, orderId) {
+      try {
+        const resp = await axios.get(API_BASE_URL + "/api/orders/" + orderId, {
+          params: {
+            userAccessKey: context.state.userAccessKey,
+          },
+        });
+        context.commit("updateOrderInfo", res.data);
+        console.log("context.state.orderInfo=", context.state.orderInfo);
+      } catch (error) {}
+    },
   },
   modules: {},
 });

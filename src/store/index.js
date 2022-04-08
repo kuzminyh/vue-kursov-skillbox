@@ -127,11 +127,12 @@ export default new Vuex.Store({
     deleteCartProduct(context, productId) {
       context.commit("deleteCartProduct", productId);
     },
-    async loadOrderInfo(context, orderId) {
+    async loadOrderInfo(context, orderId1) {
       try {
-        const resp = await axios.get(API_BASE_URL + "/api/orders/" + orderId, {
+        const resp = await axios.get(API_BASE_URL + "/api/orders/" + orderId1, {
           params: {
             userAccessKey: context.state.userAccessKey,
+            orderId: orderId1,
           },
         });
         context.commit("updateOrderInfo", res.data);

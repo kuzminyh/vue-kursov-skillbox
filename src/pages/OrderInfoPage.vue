@@ -81,7 +81,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("loadOrderInfo", this.$route.params.id);
+    this.$store.dispatch("loadOrderInfo", this.$route.params.orderId);
   },
 };
 </script>

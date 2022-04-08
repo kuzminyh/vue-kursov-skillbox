@@ -128,7 +128,7 @@ export default {
       productAdd: false,
       count: 1,
       // colorItemId: 0,
-      sizeId: 0,
+      // sizeId: 0,
     };
   },
   computed: {
@@ -139,6 +139,9 @@ export default {
     },
     colorItemId() {
       return this.product.colors[0].color.id;
+    },
+    sizeId() {
+      return this.product.sizes[0].id;
     },
   },
   methods: {

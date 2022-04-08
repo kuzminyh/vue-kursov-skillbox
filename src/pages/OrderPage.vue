@@ -165,7 +165,7 @@ export default {
         this.isError = false;
         this.$store.commit("resetCart");
         this.$store.commit("updateOrderInfo", res.data);
-        this.$router.push({ name: "orderInfo", params: { id: res.data.id } });
+        this.$router.push({ name: "orderInfo", params: { orderId: res.data.id } });
       } catch (error) {
         // console.log("error=", error.response.data.error.request);
         this.formError = error.response.data.error.request;

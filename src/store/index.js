@@ -136,6 +136,7 @@ export default new Vuex.Store({
           },
         });
         context.commit("updateOrderInfo", res.data);
+
         console.log("context.state.orderInfo=", context.state.orderInfo);
       } catch (error) {}
     },

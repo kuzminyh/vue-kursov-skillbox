@@ -4,8 +4,9 @@
       <label class="colors__label">
         <input
           class="colors__radio sr-only"
-          type="checkbox"
+          type="radio"
           :value="item.id"
+          name="color-item"
           v-model="checkedColor1"
         />
         <span class="colors__value" :style="{ background: item.code }"> </span>

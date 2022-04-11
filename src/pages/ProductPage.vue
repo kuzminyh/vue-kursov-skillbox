@@ -140,10 +140,17 @@ export default {
     colorItemId() {
       return this.product.colors[0].color.id;
     },
-    sizeId() {
-      return this.product.sizes[0].id;
+    sizeId: {
+      get() {
+        return this.product.sizes[0].id;
+      },
+      set(value) {
+        alert(value);
+        return this.$emit("change", value);
+      },
     },
   },
+
   methods: {
     ...mapActions(["addToCartData"]),
     loadProduct: async function () {

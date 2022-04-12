@@ -196,7 +196,7 @@ export default {
       immediate: true,
     },
     colorItemId(value) {
-      alert(value);
+      // alert(value);
       this.colorItemId = value;
     },
   },

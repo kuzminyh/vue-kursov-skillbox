@@ -127,7 +127,9 @@ export default {
       productLoad: false,
       productAdd: false,
       count: 1,
-      // colorItemId: 0,
+      currentSizeId: 0,
+      currentColorItemId: 0,
+      colorItemId: 0,
       // sizeId: 0,
     };
   },
@@ -137,16 +139,20 @@ export default {
       return this.productData ? this.productData : {};
       // return this.productData;
     },
-    colorItemId() {
-      return this.product.colors[0].color.id;
-    },
+    // colorItemId: {
+    //   get() {
+    //     return this.currentColorItemId;
+    //   },
+    //   set(value) {
+    //     this.currentColorItemId = value;
+    //   },
+    // },
     sizeId: {
       get() {
-        return this.product.sizes[0].id;
+        return this.currentSizeId;
       },
       set(value) {
-        alert(value);
-        return this.$emit("change", value);
+        this.currentSizeId = value;
       },
     },
   },
@@ -160,7 +166,10 @@ export default {
         .then((response) => {
           this.productData = response.data;
           this.productLoad = false;
-          console.log(response.data);
+          // this.sizeId = this.productData.sizes[0].id;
+          this.currentSizeId = this.productData.sizes[0].id;
+          this.currentColorItemId = this.product.colors[0].color.id;
+          console.log("response.data=", response.data);
         });
     },
     addToCart() {
@@ -185,6 +194,10 @@ export default {
         this.loadProduct();
       },
       immediate: true,
+    },
+    colorItemId(value) {
+      alert(value);
+      this.colorItemId = value;
     },
   },
 };

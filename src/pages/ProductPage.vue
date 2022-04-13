@@ -19,12 +19,7 @@
       <section class="item">
         <div class="item__pics pics">
           <div class="pics__wrapper">
-            <img
-              width="570"
-              height="570 !important"
-              :src="product.colors[0].gallery[0].file.url"
-              alt="Название товара"
-            />
+            <img width="570" height="570 !important" :src="imgSrc" alt="Название товара" />
           </div>
         </div>
 
@@ -130,6 +125,8 @@ export default {
       currentSizeId: 0,
       currentColorItemId: 0,
       colorItemId: 0,
+      imgSrc: undefined,
+
       // sizeId: 0,
     };
   },
@@ -139,6 +136,9 @@ export default {
       return this.productData ? this.productData : {};
       // return this.productData;
     },
+    // imgSrc() {
+    //   return this.product.colors[0].gallery[0].file.url;
+    // },
     // colorItemId: {
     //   get() {
     //     return this.currentColorItemId;
@@ -169,6 +169,7 @@ export default {
           // this.sizeId = this.productData.sizes[0].id;
           this.currentSizeId = this.productData.sizes[0].id;
           this.currentColorItemId = this.product.colors[0].color.id;
+          this.imgSrc = this.product.colors[0].gallery[0].file.url;
           console.log("response.data=", response.data);
         });
     },
@@ -198,6 +199,11 @@ export default {
     colorItemId(value) {
       // alert(value);
       this.colorItemId = value;
+      this.imgSrc = this.product.colors.find((item) => item.color.id === value).gallery[0].file.url;
+      console.log(
+        "this.imgSrc=",
+        this.product.colors.find((item) => item.color.id === value)
+      );
     },
   },
 };

@@ -2,7 +2,7 @@
   <li class="catalog__item">
     <div v-if="product.image">
       <router-link class="catalog__pic" :to="{ name: 'product', params: { id: product.id } }">
-        <img :src="product.image" alt="Название товара" />
+        <img :src="imgSrc" alt=" product.image Название товара" />
       </router-link>
     </div>
 
@@ -11,7 +11,7 @@
     </h3>
 
     <span class="catalog__price"> {{ product.price }} ₽ </span>
-    <ColorItem :colors="colors" />
+    <ColorItem :colors="colors" @change="changeImg" :currentColor="currentColor" />
   </li>
 </template>
 <script>
@@ -24,6 +24,23 @@ export default {
     colors() {
       console.log("this.product.colors=", this.product.colors);
       return this.product.colors;
+    },
+    imgSrc() {
+      return this.product.image;
+    },
+    currentColor() {
+      return this.product.colors[0].color.id;
+    },
+  },
+  methods: {
+    changeImg(value) {
+      console.log(value);
+      console.log(
+        "this.imgSrc=",
+        this.product
+        //.colors.find((item) => item.color.id === value)
+      );
+      this.imgSrc = this.product.colors.find((item) => item.color.id === value).gallery[0].file.url;
     },
   },
 };

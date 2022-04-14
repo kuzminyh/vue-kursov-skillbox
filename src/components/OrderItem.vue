@@ -1,7 +1,7 @@
 <template>
   <div class="cart__block">
     <ul class="cart__orders">
-      <li class="cart__order" v-for="item in cartProducts" :key="item.product.id">
+      <li class="cart__order" v-for="item in cartProducts" :key="item.id">
         <!-- {{ item }} -->
         <h3>
           {{ item.product.title }}

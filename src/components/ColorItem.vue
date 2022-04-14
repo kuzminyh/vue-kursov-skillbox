@@ -2,7 +2,13 @@
   <ul class="colors colors--black">
     <li class="colors__item" v-for="item in colors" :key="item.id">
       <label class="colors__label">
-        <input class="colors__radio sr-only" type="radio" name="color-item" :value="item.id" />
+        <input
+          class="colors__radio sr-only"
+          type="radio"
+          name="color-item"
+          :value="item"
+          v-model="colorImg"
+        />
         <span class="colors__value" :style="{ background: item.color.code }"> </span>
       </label>
     </li>
@@ -11,10 +17,17 @@
 
 <script>
 export default {
-  props: ["colors"],
-  created() {
-    // alert(7);
-    // console.log("colors=", colors);
+  props: ["colors", "currentColor"],
+  computed: {
+    colorImg: {
+      get() {
+        return this.currentColor;
+      },
+      set(value) {
+        console.log("item=", value);
+        this.$emit("change", value);
+      },
+    },
   },
 };
 </script>

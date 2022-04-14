@@ -124,7 +124,7 @@ export default {
       count: 1,
       currentSizeId: 0,
       currentColorItemId: 0,
-      colorItemId: 0,
+      // colorItemId: 0,
       imgSrc: undefined,
 
       // sizeId: 0,
@@ -139,14 +139,14 @@ export default {
     // imgSrc() {
     //   return this.product.colors[0].gallery[0].file.url;
     // },
-    // colorItemId: {
-    //   get() {
-    //     return this.currentColorItemId;
-    //   },
-    //   set(value) {
-    //     this.currentColorItemId = value;
-    //   },
-    // },
+    colorItemId: {
+      get() {
+        return this.currentColorItemId;
+      },
+      set(value) {
+        this.currentColorItemId = value;
+      },
+    },
     sizeId: {
       get() {
         return this.currentSizeId;
@@ -169,8 +169,9 @@ export default {
           // this.sizeId = this.productData.sizes[0].id;
           this.currentSizeId = this.productData.sizes[0].id;
           this.currentColorItemId = this.product.colors[0].color.id;
+
           this.imgSrc = this.product.colors[0].gallery[0].file.url;
-          console.log("response.data=", response.data);
+          // console.log("this.сolorItemId=", this.сolorItemId);
         });
     },
     addToCart() {

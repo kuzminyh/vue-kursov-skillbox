@@ -36,6 +36,7 @@ export default {
   components: { ProductList, ProductFilter, BasePagination },
   data() {
     return {
+      productPerPage: 3,
       totalPages: 0,
       page: 1,
       productsData: null,
@@ -76,6 +77,7 @@ export default {
               categoryId: this.filterCategory,
               seasonIds: this.filterSeson,
               colorIds: this.filterColor,
+              limit: this.productPerPage,
             },
           })
           .then((response) => {

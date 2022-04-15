@@ -61,7 +61,8 @@ export default {
       }
     },
     deleteItemInCart() {
-      this.deleteCartProduct(this.item.product.id);
+      console.log(this.item);
+      this.deleteCartProduct({ cartItemId: this.item.id }); //product
     },
   },
 };

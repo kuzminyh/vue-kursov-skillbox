@@ -6,7 +6,7 @@
           class="colors__radio sr-only"
           type="radio"
           name="color-item"
-          :value="item"
+          :value="item.color.id"
           v-model="colorImg"
         />
         <span class="colors__value" :style="{ background: item.color.code }"> </span>
@@ -24,7 +24,6 @@ export default {
         return this.currentColor;
       },
       set(value) {
-        console.log("item=", value);
         this.$emit("change", value);
       },
     },

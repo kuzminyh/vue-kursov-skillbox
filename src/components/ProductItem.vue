@@ -18,30 +18,35 @@
 import ColorItem from "./ColorItem.vue";
 // import  from '@vue/composition-api'
 export default {
+  data() {
+    return {
+      imgSrc: undefined,
+      currentColor: undefined,
+    };
+  },
   props: ["product"],
   components: { ColorItem },
   computed: {
     colors() {
-      console.log("this.product.colors=", this.product.colors);
       return this.product.colors;
     },
-    imgSrc() {
-      return this.product.image;
-    },
-    currentColor() {
-      return this.product.colors[0].color.id;
-    },
+    // imgSrc() {
+    //   return this.product.image;
+    // },
+    // currentColor() {
+    //   console.log("this.product.colors[0].color.id=", this.product.colors[0].color.id);
+    //   return this.product.colors[0].color.id;
+    // },
   },
   methods: {
     changeImg(value) {
-      console.log(value);
-      console.log(
-        "this.imgSrc=",
-        this.product
-        //.colors.find((item) => item.color.id === value)
-      );
       this.imgSrc = this.product.colors.find((item) => item.color.id === value).gallery[0].file.url;
     },
+  },
+  mounted() {
+    this.imgSrc = this.product.image;
+    this.currentColor = this.product.colors[0].color.id;
+    console.log(this.currentColor);
   },
 };
 </script>

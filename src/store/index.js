@@ -42,8 +42,8 @@ export default new Vuex.Store({
         item.quantity = amount;
       }
     },
-    deleteCartProduct(state, productId) {
-      state.cartProducts = state.cartProducts.filter((item) => item.product.id !== productId);
+    deleteCartProduct(state, { cartItemId }) {
+      state.cartProducts = state.cartProducts.filter((item) => item.id !== cartItemId);
     },
     resetCart(state) {
       state.cartProducts = [];
@@ -96,12 +96,6 @@ export default new Vuex.Store({
         });
         context.commit("updateCartProductData", resCart.data.items);
         context.commit("synCartProducts");
-        // console.log("res.data.user.id=", res.data.user.id);
-        // const dataUser = {
-        //   accessKey: res.data.user.accessKey,
-        //   userId: res.data.user.id,
-        // };
-        // context.commit("getUserAccessKey", dataUser);
       } catch (error) {}
     },
 
@@ -124,8 +118,22 @@ export default new Vuex.Store({
     updateCartProductAmount(context, { productId, amount }) {
       context.commit("updateCartProductAmount", { productId, amount });
     },
-    deleteCartProduct(context, productId) {
-      context.commit("deleteCartProduct", productId);
+    async deleteCartProduct(context, { cartItemId }) {
+      try {
+        console.log("context.state.userAccessKey=", context.state.userAccessKey);
+        const res = await axios.delete(
+          API_BASE_URL + "/api/baskets/products",
+          {
+            basketItemId: cartItemId,
+          },
+          {
+            params: {
+              userAccessKey: context.state.userAccessKey,
+            },
+          }
+        );
+        context.commit("deleteCartProduct", { cartItemId });
+      } catch (error) {}
     },
     async loadOrderInfo(context, orderId1) {
       try {

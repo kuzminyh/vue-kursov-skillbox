@@ -124,9 +124,9 @@ export default new Vuex.Store({
         const res = await axios.delete(
           API_BASE_URL + "/api/baskets/products",
           {
-            basketItemId: cartItemId,
-          },
-          {
+            data: {
+              basketItemId: cartItemId,
+            },
             params: {
               userAccessKey: context.state.userAccessKey,
             },

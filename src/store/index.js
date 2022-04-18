@@ -28,18 +28,13 @@ export default new Vuex.Store({
     synCartProducts(state) {
       state.cartProducts = state.cartProductsData;
     },
-    updateCartProductAmount(state, { productId, amount }) {
-      console.log("productId=", productId);
-      const item = state.cartProducts.find(
-        (item) =>
-          // console.log("item.product.id", item.product.id === productId);
-          item.product.id === productId
-      );
-      console.log("item", item);
-      if (item) {
-        console.log("state.cartProducts=", productId);
-        item.amount = amount;
-        item.quantity = amount;
+    updateCartProductAmount(state, { itemId, amount }) {
+      // console.log("itemId=", { itemId, amount });
+      const item1 = state.cartProducts.find((item) => item.id === itemId);
+      // console.log("item1=", item1);
+      if (item1) {
+        item1.amount = amount;
+        item1.quantity = amount;
       }
     },
     deleteCartProduct(state, { cartItemId }) {
@@ -115,23 +110,36 @@ export default new Vuex.Store({
         console.log("context.state.userAccessKey=", context.state.userAccessKey);
       } catch (error) {}
     },
-    updateCartProductAmount(context, { productId, amount }) {
-      context.commit("updateCartProductAmount", { productId, amount });
-    },
-    async deleteCartProduct(context, { cartItemId }) {
+    async updateCartProductAmount(context, { itemId, amount }) {
       try {
-        console.log("context.state.userAccessKey=", context.state.userAccessKey);
-        const res = await axios.delete(
+        console.log("itemId=", { itemId, amount });
+        const res = await axios.put(
           API_BASE_URL + "/api/baskets/products",
           {
-            data: {
-              basketItemId: cartItemId,
-            },
+            basketItemId: itemId,
+            quantity: amount,
+          },
+          {
             params: {
               userAccessKey: context.state.userAccessKey,
             },
           }
         );
+
+        context.commit("updateCartProductAmount", { itemId, amount });
+      } catch (error) {}
+    },
+    async deleteCartProduct(context, { cartItemId }) {
+      try {
+        console.log("context.state.userAccessKey=", context.state.userAccessKey);
+        const res = await axios.delete(API_BASE_URL + "/api/baskets/products", {
+          data: {
+            basketItemId: cartItemId,
+          },
+          params: {
+            userAccessKey: context.state.userAccessKey,
+          },
+        });
         context.commit("deleteCartProduct", { cartItemId });
       } catch (error) {}
     },

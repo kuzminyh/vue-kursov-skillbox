@@ -141,7 +141,7 @@ export default {
   },
   components: { OrderItem, BaseFormText, BaseFormTextArea },
   methods: {
-    async changeDelivery() {
+    async changeDelivery(event) {
       try {
         const res = await axios.get(API_BASE_URL + "/api/payments", {
           params: {
@@ -149,6 +149,7 @@ export default {
           },
         });
         this.paymentTypes = res.data;
+        this.formData.deliveryTypeId = event.target.value;
       } catch (error) {}
     },
     async order() {
@@ -164,13 +165,11 @@ export default {
             },
           }
         );
-        // console.log("res=", res.data);
         this.isError = false;
         this.$store.commit("resetCart");
         this.$store.commit("updateOrderInfo", res.data);
         this.$router.push({ name: "orderInfo", params: { orderId: res.data.id } });
       } catch (error) {
-        // console.log("error=", error.response.data.error.request);
         this.formError = error.response.data.error.request;
         this.isError = true;
       }
@@ -180,13 +179,7 @@ export default {
     ...mapGetters({ cartProducts: "cartProductsDetail" }),
   },
   created() {
-    //alert(88);
     this.changeDelivery();
   },
-  // watch: {
-  //   formData() {
-  //     alert(88);
-  //   },
-  // },
 };
 </script>

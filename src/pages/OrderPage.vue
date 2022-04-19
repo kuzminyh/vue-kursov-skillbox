@@ -66,6 +66,7 @@
                     value="1"
                     v-model="formData.deliveryTypeId"
                     checked=""
+                    @change="changeDelivery"
                   />
                   <span class="options__value"> Самовывоз <b>бесплатно</b> </span>
                 </label>
@@ -78,44 +79,35 @@
                     name="delivery"
                     v-model="formData.deliveryTypeId"
                     value="2"
+                    @change="changeDelivery"
                   />
                   <span class="options__value"> Курьером <b>290 ₽</b> </span>
                 </label>
               </li>
             </ul>
-
             <h3 class="cart__title">Оплата</h3>
             <ul class="cart__options options">
-              <li class="options__item">
+              <li class="options__item" v-for="item in paymentTypes" :key="item.id">
                 <label class="options__label">
                   <input
                     class="options__radio sr-only"
                     type="radio"
                     name="pay"
-                    value="1"
-                    checked=""
+                    :value="item.id"
                     v-model="formData.paymentTypeId"
                   />
-                  <span class="options__value"> Картой при получении </span>
-                </label>
-              </li>
-              <li class="options__item">
-                <label class="options__label">
-                  <input
-                    class="options__radio sr-only"
-                    type="radio"
-                    name="pay"
-                    value="2"
-                    v-model="formData.paymentTypeId"
-                  />
-                  <span class="options__value"> Наличными при получении </span>
+                  <span class="options__value"> {{ item.title }} </span>
                 </label>
               </li>
             </ul>
           </div>
         </div>
 
-        <order-item :cartProducts="cartProducts" :fromOrderInfoPage="fromOrderInfoPage" />
+        <order-item
+          :cartProducts="cartProducts"
+          :fromOrderInfoPage="fromOrderInfoPage"
+          :delivery="formData.deliveryTypeId"
+        />
         <div class="cart__error form__error-block" v-if="isError">
           <h4>Заявка не отправлена!</h4>
           <p>Похоже произошла ошибка. Попробуйте отправить снова или перезагрузите страницу.</p>
@@ -144,10 +136,21 @@ export default {
       },
       formError: {},
       fromOrderInfoPage: false,
+      paymentTypes: [],
     };
   },
   components: { OrderItem, BaseFormText, BaseFormTextArea },
   methods: {
+    async changeDelivery() {
+      try {
+        const res = await axios.get(API_BASE_URL + "/api/payments", {
+          params: {
+            deliveryTypeId: this.formData.deliveryTypeId,
+          },
+        });
+        this.paymentTypes = res.data;
+      } catch (error) {}
+    },
     async order() {
       try {
         const res = await axios.post(
@@ -176,5 +179,14 @@ export default {
   computed: {
     ...mapGetters({ cartProducts: "cartProductsDetail" }),
   },
+  created() {
+    //alert(88);
+    this.changeDelivery();
+  },
+  // watch: {
+  //   formData() {
+  //     alert(88);
+  //   },
+  // },
 };
 </script>

@@ -16,7 +16,7 @@
 
     <div class="cart__total">
       <p>
-        Доставка: <b> {{ delivery }} </b>
+        Доставка: <b> {{ deliveryTxt }} </b>
       </p>
       <p>
         Итого: <b> {{ cartProducts.length }} </b> товара на сумму <b>{{ totalSum }}</b>
@@ -30,14 +30,35 @@
 </template>
 
 <script>
+import axios from "axios";
 import { mapGetters } from "vuex";
+import { API_BASE_URL } from "../config";
 
 export default {
+  data() {
+    return {
+      deliveryTxt: "",
+    };
+  },
   props: ["cartProducts", "fromOrderInfoPage", "delivery"],
   computed: {
     // ...mapGetters({ cartProducts: "cartProductsDetail" }),
     totalSum() {
       return this.cartProducts.reduce((sum, current) => sum + current.price * current.quantity, 0);
+    },
+  },
+  methods: {
+    async getDelivery() {
+      try {
+        const res = await axios.get(API_BASE_URL + "/api/deliveries");
+        this.deliveryTxt = res.data.find((item) => item.id === +this.delivery).title;
+      } catch (error) {}
+    },
+  },
+  watch: {
+    delivery: {
+      handler: "getDelivery",
+      immediate: true,
     },
   },
 };

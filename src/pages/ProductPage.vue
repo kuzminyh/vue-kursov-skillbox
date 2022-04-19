@@ -166,12 +166,9 @@ export default {
         .then((response) => {
           this.productData = response.data;
           this.productLoad = false;
-          // this.sizeId = this.productData.sizes[0].id;
           this.currentSizeId = this.productData.sizes[0].id;
           this.currentColorItemId = this.product.colors[0].color.id;
-
           this.imgSrc = this.product.colors[0].gallery[0].file.url;
-          // console.log("this.сolorItemId=", this.сolorItemId);
         });
     },
     addToCart() {

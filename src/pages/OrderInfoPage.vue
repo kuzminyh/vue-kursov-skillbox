@@ -77,7 +77,7 @@ export default {
       return this.$store.state.orderInfo;
     },
     delivery() {
-      return this.$store.state.orderInfo.deliveryType.title;
+      return this.$store.state.orderInfo.deliveryType.id;
     },
   },
   created() {

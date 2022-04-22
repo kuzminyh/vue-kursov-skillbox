@@ -57,31 +57,22 @@
           <div class="cart__options">
             <h3 class="cart__title">Доставка</h3>
             <ul class="cart__options options">
-              <li class="options__item">
+              <li class="options__item" v-for="item in deliveryTypes" :key="item.id">
                 <label class="options__label">
                   <input
                     class="options__radio sr-only"
                     type="radio"
                     name="delivery"
-                    value="1"
+                    :value="item.id"
                     v-model="formData.deliveryTypeId"
-                    checked=""
                     @change="changeDelivery"
                   />
-                  <span class="options__value"> Самовывоз <b>бесплатно</b> </span>
-                </label>
-              </li>
-              <li class="options__item">
-                <label class="options__label">
-                  <input
-                    class="options__radio sr-only"
-                    type="radio"
-                    name="delivery"
-                    v-model="formData.deliveryTypeId"
-                    value="2"
-                    @change="changeDelivery"
-                  />
-                  <span class="options__value"> Курьером <b>290 ₽</b> </span>
+                  <span class="options__value" v-if="+item.price !== 0">
+                    {{ item.title }} <b> {{ item.price }}</b>
+                  </span>
+                  <span class="options__value" v-if="+item.price === 0">
+                    {{ item.title }} <b> бесплатно</b>
+                  </span>
                 </label>
               </li>
             </ul>
@@ -137,6 +128,7 @@ export default {
       formError: {},
       fromOrderInfoPage: false,
       paymentTypes: [],
+      deliveryTypes: [],
     };
   },
   components: { OrderItem, BaseFormText, BaseFormTextArea },
@@ -174,11 +166,18 @@ export default {
         this.isError = true;
       }
     },
+    async loadDeliveryType() {
+      try {
+        const resp = await axios.get(API_BASE_URL + "/api/deliveries");
+        this.deliveryTypes = resp.data;
+      } catch (error) {}
+    },
   },
   computed: {
     ...mapGetters({ cartProducts: "cartProductsDetail" }),
   },
   created() {
+    this.loadDeliveryType();
     this.changeDelivery();
   },
 };

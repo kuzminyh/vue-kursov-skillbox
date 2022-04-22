@@ -14,7 +14,7 @@
       Цвет:
       <span>
         <i :style="{ background: item.color1 }"></i>
-        Персиковый
+        {{ item.colorName }}
       </span>
     </p>
     <span class="product__code"> Артикул: 1501230 </span>
@@ -46,8 +46,6 @@ export default {
         return this.item.quantity;
       },
       set(value) {
-        // console.log("this.item=", this.item.id);
-
         this.$store.dispatch("updateCartProductAmount", { itemId: this.item.id, amount: value });
         console.log({
           itemId: this.item.id,

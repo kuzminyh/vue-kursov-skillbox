@@ -57,6 +57,7 @@ export default new Vuex.Store({
             ...item,
             image: item.color.gallery[0].file.url,
             color1: item.color.color.code,
+            colorName: item.color.color.title,
           };
         }
       });
@@ -151,9 +152,7 @@ export default new Vuex.Store({
             orderId: orderId1,
           },
         });
-        context.commit("updateOrderInfo", res.data);
-
-        console.log("context.state.orderInfo=", context.state.orderInfo);
+        context.commit("updateOrderInfo", resp.data);
       } catch (error) {}
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <main class="content container">
+  <main class="content container" v-if="orderInfo">
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
@@ -70,7 +70,6 @@ export default {
   components: { OrderItem },
   computed: {
     cartProducts() {
-      console.log("this.$store.state.orderInfo=", this.$store.state.orderInfo);
       return this.$store.state.orderInfo.basket.items;
     },
     orderInfo() {

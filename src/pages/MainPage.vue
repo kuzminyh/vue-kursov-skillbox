@@ -60,35 +60,27 @@ export default {
             }
           })
         : [];
-      console.log("result=", result);
       return result.filter((el) => el !== undefined);
     },
   },
   methods: {
     loadProducts: async function () {
       try {
-        const resp = await axios
-          .get(API_BASE_URL + "/api/products", {
-            params: {
-              page: this.page,
-              minPrice: this.filterPriceFrom,
-              maxPrice: this.filterPriceTo,
-              materialIds: this.filterMaterials,
-              categoryId: this.filterCategory,
-              seasonIds: this.filterSeson,
-              colorIds: this.filterColor,
-              limit: this.productPerPage,
-            },
-          })
-          .then((response) => {
-            this.productsData = response.data;
-            this.totalPages = response.data.pagination.total;
-            console.log(3);
-          });
-      } catch (err) {
-        console.log("error 5=", err);
-      }
-      console.log("this.productsData=", this.productsData);
+        const resp = await axios.get(API_BASE_URL + "/api/products", {
+          params: {
+            page: this.page,
+            minPrice: this.filterPriceFrom,
+            maxPrice: this.filterPriceTo,
+            materialIds: this.filterMaterials,
+            categoryId: this.filterCategory,
+            seasonIds: this.filterSeson,
+            colorIds: this.filterColor,
+            limit: this.productPerPage,
+          },
+        });
+        this.productsData = resp.data;
+        this.totalPages = resp.data.pagination.pages;
+      } catch (err) {}
     },
     paginate(value) {
       this.page = value;

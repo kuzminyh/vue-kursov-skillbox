@@ -5,7 +5,6 @@
         <input
           class="colors__radio sr-only"
           type="radio"
-          name="color-item"
           :value="item.color.id"
           v-model="colorImg"
         />

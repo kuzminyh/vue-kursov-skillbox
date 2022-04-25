@@ -174,23 +174,20 @@ export default {
     },
     loadCategories: async function () {
       try {
-        const res = await axios
-          .get(API_BASE_URL + "/api/productCategories")
-          .then((response) => (this.categoriesData = response.data));
+        const res = await axios.get(API_BASE_URL + "/api/productCategories");
+        this.categoriesData = res.data;
       } catch (error) {}
     },
     loadMaterials: async function () {
       try {
-        const res = await axios
-          .get(API_BASE_URL + "/api/materials")
-          .then((response) => (this.materialsData = response.data));
+        const res = await axios.get(API_BASE_URL + "/api/materials");
+        this.materialsData = res.data;
       } catch (error) {}
     },
     loadColors: async function () {
       try {
-        const res = await axios
-          .get(API_BASE_URL + "/api/colors")
-          .then((response) => (this.colorsData = response.data));
+        const res = await axios.get(API_BASE_URL + "/api/colors");
+        this.colorsData = res.data;
       } catch (error) {}
     },
     reset() {

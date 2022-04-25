@@ -64,14 +64,4 @@ export default {
     },
   },
 };
-// <li class="pagination__item" v-for="pageNumber in pages" :key="pageNumber">
-//   <a
-//     class="pagination__link pagination__link--arrow pagination__link--disabled"
-//     aria-label="Предыдущая страница"
-//   >
-//     <svg width="8" height="14" fill="currentColor">
-//       <use xlink:href="#icon-arrow-left"></use>
-//     </svg>
-//   </a>
-// </li>
 </script>

@@ -131,6 +131,7 @@ export default {
       deliveryTypes: [],
     };
   },
+  computed: {},
   components: { OrderItem, BaseFormText, BaseFormTextArea },
   methods: {
     async changeDelivery(event) {
@@ -141,6 +142,7 @@ export default {
           },
         });
         this.paymentTypes = res.data;
+        this.formData.paymentTypeId = res.data[0].id;
         this.formData.deliveryTypeId = event.target.value;
       } catch (error) {}
     },

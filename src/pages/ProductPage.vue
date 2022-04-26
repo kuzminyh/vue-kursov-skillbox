@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <main class="content container" v-if="productLoad"> </main> -->
+    <preloader v-if="productLoading" />
     <main class="content container" v-if="productData">
       <div class="content__top">
         <ul class="breadcrumbs">
@@ -113,13 +113,16 @@
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 import { mapActions } from "vuex";
-import CounterProduct from "../components/CounterProduct.vue";
+import CounterProduct from "@/components/CounterProduct.vue";
+import Preloader from "@/components/Preloader.vue";
+
 export default {
-  components: { CounterProduct },
+  components: { CounterProduct, Preloader },
   data() {
     return {
       productData: null,
       productLoad: false,
+      productLoading: true,
       productAdd: false,
       count: 1,
       currentSizeId: 0,
@@ -134,11 +137,7 @@ export default {
     product() {
       console.log("product=", this.productData ? this.productData : {});
       return this.productData ? this.productData : {};
-      // return this.productData;
     },
-    // imgSrc() {
-    //   return this.product.colors[0].gallery[0].file.url;
-    // },
     colorItemId: {
       get() {
         return this.currentColorItemId;
@@ -159,17 +158,16 @@ export default {
 
   methods: {
     ...mapActions(["addToCartData"]),
-    loadProduct: async function () {
-      this.productLoad = false;
-      const resp = axios
-        .get(API_BASE_URL + "/api/products/" + this.$route.params.id)
-        .then((response) => {
-          this.productData = response.data;
-          this.productLoad = false;
-          this.currentSizeId = this.productData.sizes[0].id;
-          this.currentColorItemId = this.product.colors[0].color.id;
-          this.imgSrc = this.product.colors[0].gallery[0].file.url;
-        });
+    async loadProduct() {
+      try {
+        this.productLoading = true;
+        const resp = await axios.get(API_BASE_URL + "/api/products/" + this.$route.params.id);
+        this.productData = resp.data;
+        this.productLoading = false;
+        this.currentSizeId = this.productData.sizes[0].id;
+        this.currentColorItemId = this.product.colors[0].color.id;
+        this.imgSrc = this.product.colors[0].gallery[0].file.url;
+      } catch (error) {}
     },
     addToCart() {
       // alert(this.colorItemId);

@@ -17,6 +17,7 @@
           :checkedColor.sync="filterColor"
         />
         <section class="catalog">
+          <Preloader v-if="productLoading" />
           <ProductList :products="products" />
           <BasePagination :totalPages="totalPages" :page="page" v-on:paginate="paginate" />
         </section>
@@ -29,11 +30,12 @@
 import ProductList from "@/components/ProductList.vue";
 import ProductFilter from "@/components/ProductFilter.vue";
 import BasePagination from "@/components/BasePagination.vue";
+import Preloader from "@/components/Preloader.vue";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 
 export default {
-  components: { ProductList, ProductFilter, BasePagination },
+  components: { ProductList, ProductFilter, BasePagination, Preloader },
   data() {
     return {
       productPerPage: 3,
@@ -46,6 +48,7 @@ export default {
       filterCategory: null,
       filterSeson: [],
       filterColor: [],
+      productLoading: true,
     };
   },
   computed: {
@@ -66,6 +69,7 @@ export default {
   methods: {
     loadProducts: async function () {
       try {
+        this.productLoading = true;
         const resp = await axios.get(API_BASE_URL + "/api/products", {
           params: {
             page: this.page,
@@ -80,6 +84,7 @@ export default {
         });
         this.productsData = resp.data;
         this.totalPages = resp.data.pagination.pages;
+        this.productLoading = false;
       } catch (err) {}
     },
     paginate(value) {

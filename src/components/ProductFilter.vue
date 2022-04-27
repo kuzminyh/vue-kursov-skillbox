@@ -4,11 +4,21 @@
       <fieldset class="form__block">
         <legend class="form__legend">Цена</legend>
         <label class="form__label form__label--price">
-          <input class="form__input" type="text" v-model.number="currentPriceFrom" />
+          <input
+            class="form__input"
+            type="text"
+            v-model.number="currentPriceFrom"
+            @input="showBtnReset"
+          />
           <span class="form__value">От</span>
         </label>
         <label class="form__label form__label--price">
-          <input class="form__input" type="text" v-model.number="currentPriceTo" />
+          <input
+            class="form__input"
+            type="text"
+            v-model.number="currentPriceTo"
+            @input="showBtnReset"
+          />
           <span class="form__value">До</span>
         </label>
       </fieldset>
@@ -41,6 +51,7 @@
                 name="material"
                 :value="material.id"
                 v-model="currentCheckedMaterials"
+                @input="showBtnReset"
               />
               <span class="check-list__desc">
                 {{ material.title }}
@@ -62,6 +73,7 @@
                 name="collection"
                 value="1"
                 v-model.number="currentСheckedSeson"
+                @input="showBtnReset"
               />
               <span class="check-list__desc">
                 лето
@@ -77,6 +89,7 @@
                 name="collection"
                 value="3"
                 v-model.number="currentСheckedSeson"
+                @input="showBtnReset"
               />
               <span class="check-list__desc">
                 зима
@@ -92,6 +105,7 @@
                 name="collection"
                 value="4"
                 v-model.number="currentСheckedSeson"
+                @input="showBtnReset"
               />
               <span class="check-list__desc">
                 весна
@@ -107,6 +121,7 @@
                 name="collection"
                 value="2"
                 v-model.number="currentСheckedSeson"
+                @input="showBtnReset"
               />
               <span class="check-list__desc">
                 осень
@@ -125,7 +140,12 @@
       </fieldset>
 
       <button class="filter__submit button button--primery" type="submit">Применить</button>
-      <button class="filter__reset button button--second" type="button" @click.prevent="reset">
+      <button
+        class="filter__reset button button--second"
+        type="button"
+        @click.prevent="reset"
+        v-if="resetAvailable"
+      >
         Сбросить
       </button>
     </form>
@@ -148,6 +168,7 @@ export default {
       currentСheckedSeson: [],
       colorsData: null,
       checkedColor: [],
+      resetAvailable: false,
     };
   },
   props: ["priceFrom", "priceTo", "checkedMaterials", "checkedSeson", "selectedCategory"],
@@ -171,6 +192,7 @@ export default {
       this.$emit("update:checkedSeson", this.currentСheckedSeson);
       this.$emit("update:selectedCategory", this.currentSelectedCategory);
       this.$emit("update:checkedColor", this.checkedColor);
+      this.resetAvailable = true;
     },
     loadCategories: async function () {
       try {
@@ -197,6 +219,15 @@ export default {
       this.$emit("update:checkedSeson", []);
       this.$emit("update:selectedCategory", 0);
       this.$emit("update:checkedColor", []);
+      this.resetAvailable = false;
+    },
+    showBtnReset(value) {
+      if (value.target.value) {
+        console.log("value=", value);
+        this.resetAvailable = true;
+      } else {
+        this.resetAvailable = true;
+      }
     },
   },
   watch: {

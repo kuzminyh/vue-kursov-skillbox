@@ -5,6 +5,7 @@ import ProductPage from "@/pages/ProductPage.vue";
 import CartPage from "@/pages/CartPage.vue";
 import OrderPage from "@/pages/OrderPage.vue";
 import OrderInfoPage from "@/pages/OrderInfoPage.vue";
+import PageNotFound from "@/pages/PageNotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     name: "orderInfo",
     component: OrderInfoPage,
     path: "/orders/:orderId",
+  },
+  {
+    name: "PageNotFound",
+    component: PageNotFound,
+    path: "*",
   },
 ];
 

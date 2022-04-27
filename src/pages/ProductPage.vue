@@ -8,6 +8,10 @@
             <router-link class="breadcrumbs__link" :to="{ name: 'main' }"> Каталог </router-link>
           </li>
           <li class="breadcrumbs__item">
+            <router-link
+              class="breadcrumbs__link"
+              :to="{ name: 'main', params: { categoriaId: product.category.id } }"
+            ></router-link>
             <a class="breadcrumbs__link" href="#"> {{ product.category.title }} </a>
           </li>
           <li class="breadcrumbs__item">

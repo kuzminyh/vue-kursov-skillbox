@@ -94,5 +94,12 @@ export default {
   created() {
     this.loadOrderInfoInner();
   },
+  watch: {
+    "$route.params.orderId": {
+      handler() {
+        this.loadOrderInfoInner();
+      },
+    },
+  },
 };
 </script>

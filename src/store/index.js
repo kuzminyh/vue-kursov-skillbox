@@ -9,10 +9,8 @@ export default new Vuex.Store({
     cartProducts: [],
     userAccessKey: null,
     cartProductsData: [],
-    userAccessKey: null,
     userId: 0,
     orderInfo: null,
-    // totalPrice: 0,
   },
   mutations: {
     updateCartProductData(state, items) {
@@ -29,12 +27,10 @@ export default new Vuex.Store({
       state.cartProducts = state.cartProductsData;
     },
     updateCartProductAmount(state, { itemId, amount }) {
-      // console.log("itemId=", { itemId, amount });
-      const item1 = state.cartProducts.find((item) => item.id === itemId);
-      // console.log("item1=", item1);
-      if (item1) {
-        item1.amount = amount;
-        item1.quantity = amount;
+      const item = state.cartProducts.find((el) => el.id === itemId);
+      if (item) {
+        item.amount = amount;
+        item.quantity = amount;
       }
     },
     deleteCartProduct(state, { cartItemId }) {
@@ -94,7 +90,6 @@ export default new Vuex.Store({
         context.commit("synCartProducts");
       } catch (error) {}
     },
-
     async loadCart(context) {
       try {
         const res = await axios.get(API_BASE_URL + "/api/baskets", {
@@ -102,18 +97,15 @@ export default new Vuex.Store({
             userAccessKey: context.state.userAccessKey,
           },
         });
-        // if (!context.state.userAccessKey) {
+
         localStorage.setItem("userAccessKey", res.data.user.accessKey);
         context.commit("updateUserAccessKey", res.data.user.accessKey);
-        // }
         context.commit("updateCartProductData", res.data.items);
         context.commit("synCartProducts");
-        console.log("context.state.userAccessKey=", context.state.userAccessKey);
       } catch (error) {}
     },
     async updateCartProductAmount(context, { itemId, amount }) {
       try {
-        console.log("itemId=", { itemId, amount });
         const res = await axios.put(
           API_BASE_URL + "/api/baskets/products",
           {
@@ -132,7 +124,6 @@ export default new Vuex.Store({
     },
     async deleteCartProduct(context, { cartItemId }) {
       try {
-        console.log("context.state.userAccessKey=", context.state.userAccessKey);
         const res = await axios.delete(API_BASE_URL + "/api/baskets/products", {
           data: {
             basketItemId: cartItemId,

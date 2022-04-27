@@ -174,7 +174,6 @@ export default {
       } catch (error) {}
     },
     addToCart() {
-      // alert(this.colorItemId);
       this.productAdd = false;
       this.addToCartData({
         productId: this.product.id,
@@ -197,13 +196,8 @@ export default {
       immediate: true,
     },
     colorItemId(value) {
-      // alert(value);
       this.colorItemId = value;
       this.imgSrc = this.product.colors.find((item) => item.color.id === value).gallery[0].file.url;
-      console.log(
-        "this.imgSrc=",
-        this.product.colors.find((item) => item.color.id === value)
-      );
     },
   },
 };

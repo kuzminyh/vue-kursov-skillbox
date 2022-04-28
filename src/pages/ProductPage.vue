@@ -11,8 +11,9 @@
             <router-link
               class="breadcrumbs__link"
               :to="{ name: 'main', params: { categoriaId: product.category.id } }"
-            ></router-link>
-            <a class="breadcrumbs__link" href="#"> {{ product.category.title }} </a>
+            >
+              {{ product.category.title }}</router-link
+            >
           </li>
           <li class="breadcrumbs__item">
             <a class="breadcrumbs__link"> {{ product.title }} </a>

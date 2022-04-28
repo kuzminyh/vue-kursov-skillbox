@@ -30,13 +30,6 @@ export default {
     colors() {
       return this.product.colors;
     },
-    // imgSrc() {
-    //   return this.product.image;
-    // },
-    // currentColor() {
-    //   console.log("this.product.colors[0].color.id=", this.product.colors[0].color.id);
-    //   return this.product.colors[0].color.id;
-    // },
   },
   methods: {
     changeImg(value) {
@@ -46,7 +39,6 @@ export default {
   mounted() {
     this.imgSrc = this.product.image;
     this.currentColor = this.product.colors[0].color.id;
-    console.log(this.currentColor);
   },
 };
 </script>

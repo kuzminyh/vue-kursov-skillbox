@@ -93,9 +93,10 @@ export default {
     },
   },
   created() {
-    console.log(1);
+    if ("$route.params.categoriaId") {
+      this.filterCategory = this.$route.params.categoriaId;
+    }
     this.loadProducts();
-    console.log(2);
   },
   watch: {
     filterPriceFrom() {

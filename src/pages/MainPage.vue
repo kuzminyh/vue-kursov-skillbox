@@ -3,7 +3,9 @@
     <main class="content container">
       <div class="content__top">
         <div class="content__row">
-          <h1 class="content__title">Каталог</h1>
+          <a href="">
+            <h1 class="content__title">Каталог</h1>
+          </a>
           <span class="content__info"> 152 товара </span>
         </div>
       </div>

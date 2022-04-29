@@ -95,8 +95,8 @@ export default {
     },
   },
   created() {
-    if ("$route.params.categoriaId") {
-      this.filterCategory = this.$route.params.categoriaId;
+    if ("$route.params.slug") {
+      this.filterCategory = this.$route.params.slug;
     }
     this.loadProducts();
   },

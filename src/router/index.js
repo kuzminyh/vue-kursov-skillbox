@@ -18,7 +18,7 @@ const routes = [
   {
     name: "mainFilter",
     component: MainPage,
-    path: "/:categoriaId",
+    path: "/:slug",
   },
   {
     name: "product",

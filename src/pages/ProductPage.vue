@@ -10,7 +10,7 @@
           <li class="breadcrumbs__item">
             <router-link
               class="breadcrumbs__link"
-              :to="{ name: 'mainFilter', params: { categoriaId: product.category.id } }"
+              :to="{ name: 'mainFilter', params: { slug: product.category.slug } }"
             >
               {{ product.category.title }}</router-link
             >

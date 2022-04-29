@@ -102,7 +102,6 @@ export default {
   },
   watch: {
     filterPriceFrom() {
-      console.log("this.filterPriceFrom=", this.filterPriceFrom);
       this.loadProducts();
     },
     filterPriceTo() {
@@ -115,7 +114,6 @@ export default {
       this.loadProducts();
     },
     filterSeson() {
-      console.log("this.filterSeson=", this.filterSeson);
       this.loadProducts();
     },
     filterColor() {

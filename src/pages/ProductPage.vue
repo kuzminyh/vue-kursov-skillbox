@@ -10,7 +10,7 @@
           <li class="breadcrumbs__item">
             <router-link
               class="breadcrumbs__link"
-              :to="{ name: 'main', params: { categoriaId: product.category.id } }"
+              :to="{ name: 'mainFilter', params: { categoriaId: product.category.id } }"
             >
               {{ product.category.title }}</router-link
             >
@@ -132,15 +132,11 @@ export default {
       count: 1,
       currentSizeId: 0,
       currentColorItemId: 0,
-      // colorItemId: 0,
       imgSrc: undefined,
-
-      // sizeId: 0,
     };
   },
   computed: {
     product() {
-      console.log("product=", this.productData ? this.productData : {});
       return this.productData ? this.productData : {};
     },
     colorItemId: {

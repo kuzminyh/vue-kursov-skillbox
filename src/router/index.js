@@ -16,7 +16,7 @@ const routes = [
     path: "/",
   },
   {
-    name: "main",
+    name: "mainFilter",
     component: MainPage,
     path: "/:categoriaId",
   },

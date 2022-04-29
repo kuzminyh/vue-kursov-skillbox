@@ -41,11 +41,6 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      // page: 1,
-    };
-  },
   props: ["page", "totalPages"],
   methods: {
     paginateRight(page, totalPages) {

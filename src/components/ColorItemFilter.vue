@@ -27,20 +27,5 @@ export default {
       this.$emit("update:checkedColor1", this.checkedColor1);
     },
   },
-
-  computed: {
-    // checkedColor() {
-    //   this.$emit("change:currentColor")
-    // }
-    // checkedColor: {
-    //   get() {
-    //     return this.currentColor;
-    //   },
-    //   set(checked) {
-    //     console.log("checked=", checked);
-    //     this.$emit("change:currentColor", checked);
-    //   },
-    // },
-  },
 };
 </script>

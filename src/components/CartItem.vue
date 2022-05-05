@@ -47,10 +47,6 @@ export default {
       },
       set(value) {
         this.$store.dispatch("updateCartProductAmount", { itemId: this.item.id, amount: value });
-        console.log({
-          itemId: this.item.id,
-          amount: value,
-        });
       },
     },
   },
@@ -62,7 +58,6 @@ export default {
       }
     },
     deleteItemInCart() {
-      console.log(this.item);
       this.deleteCartProduct({ cartItemId: this.item.id }); //product
     },
   },

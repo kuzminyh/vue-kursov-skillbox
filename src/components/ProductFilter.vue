@@ -183,7 +183,6 @@ export default {
     },
     showBtnReset(value) {
       if (value.target.value) {
-        console.log("value=", value);
         this.resetAvailable = true;
       } else {
         this.resetAvailable = true;

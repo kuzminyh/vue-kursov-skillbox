@@ -86,9 +86,13 @@ export default {
   },
   methods: {
     async loadOrderInfoInner() {
-      this.productLoading = true;
-      await this.$store.dispatch("loadOrderInfo", this.$route.params.orderId);
-      this.productLoading = false;
+      try {
+        this.productLoading = true;
+        await this.$store.dispatch("loadOrderInfo", this.$route.params.orderId);
+        this.productLoading = false;
+      } catch (error) {
+        this.$router.push({ name: "PageNotFound" });
+      }
     },
   },
   created() {

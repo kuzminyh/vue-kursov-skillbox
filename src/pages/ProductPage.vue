@@ -1,6 +1,6 @@
 <template>
   <div>
-    <preloader v-if="productLoading" />
+    <Preloader v-if="productLoading" />
     <main class="content container" v-if="productData">
       <div class="content__top">
         <ul class="breadcrumbs">
@@ -47,7 +47,6 @@
                       v-for="colorItem in product.colors"
                       :key="colorItem.id"
                     >
-                      <!-- <span> productLoad = </span> {{colorItem}} -->
                       <label class="colors__label">
                         <input
                           class="colors__radio sr-only"
@@ -74,8 +73,10 @@
                   </label>
                 </fieldset>
               </div>
-
-              <button class="item__button button button--primery" type="submit">В корзину</button>
+              <Preloader class="item__button" v-if="productLoading" />
+              <button v-else class="item__button button button--primery" type="submit">
+                В корзину
+              </button>
             </form>
           </div>
         </div>
@@ -168,16 +169,20 @@ export default {
         this.currentSizeId = this.productData.sizes[0].id;
         this.currentColorItemId = this.product.colors[0].color.id;
         this.imgSrc = this.product.colors[0].gallery[0].file.url;
-      } catch (error) {}
+      } catch (error) {
+        this.$router.push({ name: "PageNotFound" });
+      }
     },
-    addToCart() {
+    async addToCart() {
       this.productAdd = false;
-      this.addToCartData({
+      this.productLoading = true;
+      await this.addToCartData({
         productId: this.product.id,
         colorItemId: this.colorItemId,
         sizeId: this.sizeId,
         quantity: this.count,
       });
+      this.productLoading = false;
     },
     changeCount(value) {
       if (value > 0) {

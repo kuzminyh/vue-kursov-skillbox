@@ -57,9 +57,7 @@ export default new Vuex.Store({
           };
         }
       });
-      console.log("prod=", prod);
       return prod;
-      // return state.cartProducts;
     },
     totalPrice(state) {},
   },
@@ -144,7 +142,11 @@ export default new Vuex.Store({
           },
         });
         context.commit("updateOrderInfo", resp.data);
-      } catch (error) {}
+      } catch (error) {
+        if (error.response.status === 400) {
+          this.$router.push({ name: "PageNotFound" });
+        }
+      }
     },
   },
   modules: {},

@@ -55,7 +55,6 @@
               />
               <span class="check-list__desc">
                 {{ material.title }}
-                <span>(3)</span>
               </span>
             </label>
           </li>
@@ -65,67 +64,18 @@
       <fieldset class="form__block">
         <legend class="form__legend">Коллекция</legend>
         <ul class="check-list">
-          <li class="check-list__item">
+          <li class="check-list__item" v-for="seson in sesons" :key="seson.id">
             <label class="check-list__label">
               <input
                 class="check-list__check sr-only"
                 type="checkbox"
                 name="collection"
-                value="1"
-                v-model.number="currentСheckedSeson"
+                :value="seson.id"
+                v-model="currentСheckedSeson"
                 @input="showBtnReset"
               />
               <span class="check-list__desc">
-                лето
-                <span>(2)</span>
-              </span>
-            </label>
-          </li>
-          <li class="check-list__item">
-            <label class="check-list__label">
-              <input
-                class="check-list__check sr-only"
-                type="checkbox"
-                name="collection"
-                value="3"
-                v-model.number="currentСheckedSeson"
-                @input="showBtnReset"
-              />
-              <span class="check-list__desc">
-                зима
-                <span>(53)</span>
-              </span>
-            </label>
-          </li>
-          <li class="check-list__item">
-            <label class="check-list__label">
-              <input
-                class="check-list__check sr-only"
-                type="checkbox"
-                name="collection"
-                value="4"
-                v-model.number="currentСheckedSeson"
-                @input="showBtnReset"
-              />
-              <span class="check-list__desc">
-                весна
-                <span>(24)</span>
-              </span>
-            </label>
-          </li>
-          <li class="check-list__item">
-            <label class="check-list__label">
-              <input
-                class="check-list__check sr-only"
-                type="checkbox"
-                name="collection"
-                value="2"
-                v-model.number="currentСheckedSeson"
-                @input="showBtnReset"
-              />
-              <span class="check-list__desc">
-                осень
-                <span>(30)</span>
+                {{ seson.title }}
               </span>
             </label>
           </li>
@@ -164,6 +114,7 @@ export default {
       currentSelectedCategory: 0,
       categoriesData: null,
       materialsData: null,
+      sesonsData: null,
       currentCheckedMaterials: [],
       currentСheckedSeson: [],
       colorsData: null,
@@ -171,7 +122,7 @@ export default {
       resetAvailable: false,
     };
   },
-  props: ["priceFrom", "priceTo", "checkedMaterials", "checkedSeson", "selectedCategory"],
+  props: ["priceFrom", "priceTo", "checkedMaterials", "сheckedSeson", "selectedCategory"],
   computed: {
     categories() {
       return this.categoriesData ? this.categoriesData.items : [];
@@ -181,6 +132,9 @@ export default {
     },
     colors() {
       return this.colorsData ? this.colorsData.items : [];
+    },
+    sesons() {
+      return this.sesonsData ? this.sesonsData.items : [];
     },
   },
   components: { ColorItemFilter },
@@ -212,11 +166,17 @@ export default {
         this.colorsData = res.data;
       } catch (error) {}
     },
+    loadSesons: async function () {
+      try {
+        const res = await axios.get(API_BASE_URL + "/api/seasons");
+        this.sesonsData = res.data;
+      } catch (error) {}
+    },
     reset() {
       this.$emit("update:priceFrom", 0);
       this.$emit("update:priceTo", 0);
       this.$emit("update:checkedMaterials", []);
-      this.$emit("update:checkedSeson", []);
+      this.$emit("update:сheckedSeson", []);
       this.$emit("update:selectedCategory", 0);
       this.$emit("update:checkedColor", []);
       this.resetAvailable = false;
@@ -251,6 +211,7 @@ export default {
     this.loadCategories();
     this.loadMaterials();
     this.loadColors();
+    this.loadSesons();
   },
 };
 </script>

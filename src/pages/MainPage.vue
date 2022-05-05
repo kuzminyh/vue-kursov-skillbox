@@ -15,7 +15,7 @@
           :priceTo.sync="filterPriceTo"
           :checkedMaterials.sync="filterMaterials"
           :selectedCategory.sync="filterCategory"
-          :checkedSeson.sync="filterSeson"
+          :сheckedSeson.sync="filterSeson"
           :checkedColor.sync="filterColor"
         />
         <section class="catalog">
@@ -47,8 +47,8 @@ export default {
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterMaterials: [],
-      filterCategory: null,
       filterSeson: [],
+      filterCategory: null,
       filterColor: [],
       productLoading: true,
     };
